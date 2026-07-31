@@ -1,11 +1,12 @@
 # BlueRise GitHub Pages
 
-Bộ GitHub Pages gồm 11 storyboard HTML độc lập:
+Bộ GitHub Pages gồm 12 storyboard HTML độc lập:
 
 - Dashboard
 - Lookup
 - Classes
 - Timetable
+- Absence (7 màn hình trong một file HTML)
 - Assessments
 - Notifications
 - Feedback
