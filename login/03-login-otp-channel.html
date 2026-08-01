@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>BlueRise - Chọn kênh OTP</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Be+Vietnam+Pro:wght@300;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+@keyframes br-rise{0%{transform:translateY(14px) scale(.92);opacity:.45}100%{transform:translateY(0) scale(1);opacity:1}}
+@keyframes br-glow{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:.95;transform:scale(1.05)}}
+@keyframes br-drift{0%{transform:translateX(-9px)}100%{transform:translateX(13px)}}
+@keyframes br-caret{0%,45%{opacity:1}55%,100%{opacity:0}}
+@keyframes br-spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important}}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#0B72AE;font-family:'Be Vietnam Pro',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow:hidden}
+a{color:#0B72AE}a:hover{color:#063E62}
+/* /login-otp-channel — khung thiết kế 430x932, scale contain để vừa mọi màn hình */
+#stage{position:fixed;top:50%;left:50%;width:430px;height:932px;transform-origin:50% 50%;transform:translate(-50%,-50%) scale(var(--s,1))}
+#stage > div{border-radius:0 !important;box-shadow:none !important;height:932px !important}
+</style>
+</head>
+<body>
+<div id="stage">
+<div style="position:relative;width:430px;height:932px;border-radius:38px;overflow:hidden;background:#FBFDFF;box-shadow:0 24px 60px rgba(6,62,98,.22);display:flex;flex-direction:column">
+<div style="position:relative;flex:1;min-height:230px;overflow:hidden;background:#0B72AE">
+<svg viewBox="0 0 430 556" preserveAspectRatio="xMidYMin slice" style="position:absolute;inset:0;width:100%;height:100%;display:block">
+<defs><linearGradient id="h3-g" x1="0" y1="0" x2="0.65" y2="1"><stop offset="0" stop-color="#063E62"/><stop offset="0.58" stop-color="#0B72AE"/><stop offset="1" stop-color="#37AEE2"/></linearGradient><radialGradient id="h3-s" cx="0.5" cy="0.5" r="0.5"><stop offset="0.34" stop-color="#FFE9AE" stop-opacity="0.5"/><stop offset="1" stop-color="#FFE9AE" stop-opacity="0"/></radialGradient></defs>
+<rect width="430" height="556" fill="url(#h3-g)"/>
+<circle cx="62" cy="52" r="2" fill="#fff" opacity="0.7"/><circle cx="146" cy="34" r="1.4" fill="#fff" opacity="0.5"/>
+<circle cx="300" cy="392" r="132" fill="url(#h3-s)" style="animation:br-glow 5.6s ease-in-out infinite"/>
+<circle cx="300" cy="392" r="46" fill="#FFF3CF"/>
+<g fill="#fff" opacity="0.1" style="animation:br-drift 17s ease-in-out infinite alternate"><ellipse cx="118" cy="308" rx="48" ry="28"/><ellipse cx="76" cy="318" rx="30" ry="19"/><ellipse cx="160" cy="318" rx="28" ry="18"/><rect x="70" y="312" width="122" height="22" rx="11"/></g>
+<path d="M0,504 C82,484 138,522 226,504 C310,486 358,518 430,500 L430,556 L0,556 Z" fill="#fff" opacity="0.1"/>
+</svg>
+<div style="position:relative;z-index:1;padding:52px 24px 0">
+<div style="display:flex;align-items:center;gap:12px">
+<div style="width:42px;height:42px;border-radius:16px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.32);display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;cursor:pointer;line-height:22px"><i class="fa-solid fa-arrow-left"></i></div>
+<div style="font:700 13px/20px 'Be Vietnam Pro',sans-serif;color:rgba(255,255,255,.8)">Bước 3 / 5</div>
+</div>
+<div style="font:800 26px/32px 'Baloo 2',sans-serif;color:#fff;margin-top:16px;line-height:32px">Kích hoạt tài khoản</div>
+<div style="font:500 13px/20px 'Be Vietnam Pro',sans-serif;color:rgba(255,255,255,.8);margin-top:4px">Chọn phương thức nhận OTP cho SĐT 09••• •• 789</div>
+</div>
+</div>
+
+<div style="flex-shrink:0;margin-top:-32px;border-radius:32px 32px 0 0;background:#fff;padding:24px 24px 32px;position:relative;z-index:2;display:flex;flex-direction:column;box-shadow:0 -10px 30px rgba(6,62,98,.1)">
+<div style="display:flex;gap:4px;margin-bottom:24px">
+<span style="width:5px;height:5px;border-radius:4px;background:#0B72AE"></span><span style="width:5px;height:5px;border-radius:4px;background:#0B72AE"></span>
+<span style="width:22px;height:5px;border-radius:4px;background:#0B72AE"></span>
+<span style="width:5px;height:5px;border-radius:4px;background:#DDEAF3"></span><span style="width:5px;height:5px;border-radius:4px;background:#DDEAF3"></span>
+</div>
+<div style="font:700 13px/20px 'Be Vietnam Pro',sans-serif;letter-spacing:1.6px;color:#0B3B58;margin-bottom:16px">PHƯƠNG THỨC NHẬN MÃ</div>
+
+<div style="display:flex;align-items:center;gap:16px;padding:16px 16px;border-radius:24px;border:2px solid #0B72AE;background:#F4FAFD;box-shadow:0 3px 0 #DDEAF3;cursor:pointer">
+<div style="width:48px;height:48px;border-radius:16px;background:#0B72AE;color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0;line-height:28px"><i class="fa-solid fa-comment-dots"></i></div>
+<div style="flex:1;min-width:0">
+<div style="font:700 15px/22px 'Baloo 2',sans-serif;color:#0B3B58">Zalo OTP</div>
+<div style="font:500 13px/20px 'Be Vietnam Pro',sans-serif;color:#5A7488;margin-top:2px">Nhận mã OTP qua Zalo đã liên kết với số điện thoại</div>
+</div>
+<span style="width:19px;height:19px;border-radius:50%;border:2.5px solid #CBDFEC;border-top-color:#0B72AE;animation:br-spin .8s linear infinite;flex-shrink:0"></span>
+</div>
+
+<div style="display:flex;align-items:center;gap:16px;padding:16px 16px;border-radius:24px;border:2px solid #EDF4F9;background:#fff;margin-top:12px;opacity:.5">
+<div style="width:48px;height:48px;border-radius:16px;background:#EAF6FD;color:#0B72AE;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0;line-height:28px"><i class="fa-solid fa-message"></i></div>
+<div style="flex:1;min-width:0">
+<div style="font:700 15px/22px 'Baloo 2',sans-serif;color:#0B3B58">SMS OTP</div>
+<div style="font:500 13px/20px 'Be Vietnam Pro',sans-serif;color:#5A7488;margin-top:2px">Nhận mã OTP qua tin nhắn SMS</div>
+</div>
+<i class="fa-solid fa-chevron-right" style="font-size:13px;color:#B8CCD9;line-height:1"></i>
+</div>
+
+<div style="display:flex;gap:8px;align-items:flex-start;margin-top:16px">
+<i class="fa-solid fa-circle-info" style="font-size:13px;color:#8AA3B4;margin-top:2px;line-height:1"></i>
+<div style="font:500 13px/20px 'Be Vietnam Pro',sans-serif;color:#8AA3B4;flex:1">Chạm vào một phương thức là hệ thống gửi mã ngay, không cần xác nhận thêm.</div>
+</div>
+
+<div style="margin-top:24px;height:56px;border-radius:16px;background:#fff;border:2px solid #DDEAF3;color:#0B3B58;display:flex;align-items:center;justify-content:center;font:700 15px/22px 'Baloo 2',sans-serif;cursor:pointer">Quay lại</div>
+</div>
+</div>
+</div>
+<script>
+(function(){
+  var st = document.getElementById('stage');
+  function fit(){ st.style.setProperty('--s', Math.min(innerWidth/430, innerHeight/932)); }
+  fit();
+  addEventListener('resize', fit);
+  addEventListener('orientationchange', fit);
+})();
+</script>
+</body>
+</html>

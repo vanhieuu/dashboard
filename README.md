@@ -1,28 +1,12 @@
 # BlueRise GitHub Pages
 
-Bộ GitHub Pages gồm 12 storyboard HTML độc lập:
+Bộ website tĩnh đã được chuẩn hóa để triển khai trực tiếp bằng GitHub Pages.
 
-- Dashboard
-- Lookup
-- Classes
-- Timetable
-- Absence (7 màn hình trong một file HTML)
-- Assessments
-- Notifications
-- Feedback
-- Tuition
-- Settlement
-- Rewards
-- Account
+## Triển khai
 
-## Đưa lên GitHub Pages
+1. Upload toàn bộ nội dung của thư mục này vào thư mục gốc của repository.
+2. Vào **Settings → Pages**.
+3. Chọn **Deploy from a branch**.
+4. Chọn branch `main` và thư mục `/ (root)`.
 
-1. Tạo một repository mới trên GitHub.
-2. Giải nén file ZIP.
-3. Upload **toàn bộ file bên trong** vào thư mục gốc của repository.
-4. Mở `Settings` → `Pages`.
-5. Chọn `Deploy from a branch`.
-6. Chọn branch `main` và thư mục `/ (root)`.
-7. Nhấn `Save`.
-
-Trang chính là `index.html`. Không cần Node.js hoặc bước build.
+Trang vào chính: `index.html`.

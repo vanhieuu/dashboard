@@ -1,131 +1,137 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0B72AE">
-  <title>BlueRise Storyboards</title>
-  <style>
-    :root {
-      color-scheme: light;
-      --blue: #0B72AE;
-      --blue-dark: #063E62;
-      --blue-soft: #EAF5FB;
-      --ink: #17212B;
-      --muted: #62717E;
-      --line: #DDE7ED;
-      --surface: #FFFFFF;
-      --page: #F4F8FA;
-      --yellow: #FFD166;
-      --green: #37E0A5;
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at 8% 0%, rgba(55,174,226,.16), transparent 34rem),
-        radial-gradient(circle at 96% 8%, rgba(255,209,102,.19), transparent 30rem),
-        var(--page);
-    }
-    a { color: inherit; }
-    .shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 52px 0 48px; }
-    .hero {
-      position: relative;
-      overflow: hidden;
-      padding: clamp(28px, 5vw, 54px);
-      border-radius: 28px;
-      color: white;
-      background: linear-gradient(135deg, var(--blue-dark), var(--blue));
-      box-shadow: 0 24px 70px rgba(6, 62, 98, .22);
-    }
-    .hero::after {
-      content: "";
-      position: absolute;
-      width: 340px;
-      height: 340px;
-      border-radius: 50%;
-      right: -120px;
-      top: -155px;
-      background: rgba(255,255,255,.08);
-    }
-    .eyebrow { margin: 0 0 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; font-size: 12px; opacity: .78; }
-    h1 { position: relative; z-index: 1; max-width: 760px; margin: 0; font-size: clamp(34px, 6vw, 62px); line-height: .98; letter-spacing: -.045em; }
-    .lead { position: relative; z-index: 1; max-width: 720px; margin: 22px 0 0; font-size: clamp(15px, 2vw, 19px); line-height: 1.65; opacity: .86; }
-    .meta { position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
-    .pill { padding: 9px 13px; border: 1px solid rgba(255,255,255,.22); border-radius: 999px; background: rgba(255,255,255,.10); font-size: 13px; font-weight: 700; backdrop-filter: blur(8px); }
-    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin: 42px 2px 18px; }
-    .section-head h2 { margin: 0; font-size: 24px; letter-spacing: -.025em; }
-    .section-head p { margin: 0; color: var(--muted); font-size: 14px; }
-    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-    .card {
-      display: flex;
-      min-height: 190px;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 22px;
-      border: 1px solid var(--line);
-      border-radius: 21px;
-      background: rgba(255,255,255,.92);
-      text-decoration: none;
-      box-shadow: 0 9px 26px rgba(23, 33, 43, .055);
-      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-    }
-    .card:hover { transform: translateY(-4px); border-color: #AFCFDF; box-shadow: 0 20px 44px rgba(23,33,43,.11); }
-    .icon { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 15px; background: var(--blue-soft); color: var(--blue); font-size: 24px; }
-    .card h3 { margin: 20px 0 7px; font-size: 20px; letter-spacing: -.025em; }
-    .card p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
-    .open { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 24px; color: var(--blue-dark); font-size: 13px; font-weight: 800; }
-    .arrow { font-size: 19px; transition: transform .18s ease; }
-    .card:hover .arrow { transform: translateX(4px); }
-    footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 26px 4px 0; color: var(--muted); font-size: 13px; }
-    @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-    @media (max-width: 610px) {
-      .shell { width: min(100% - 20px, 1180px); padding-top: 10px; }
-      .hero { border-radius: 20px; }
-      .grid { grid-template-columns: 1fr; }
-      .section-head { align-items: start; flex-direction: column; gap: 6px; }
-      .card { min-height: 170px; }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BlueSky / BlueRise — toàn bộ thiết kế</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Be+Vietnam+Pro:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#F4FAFD;font-family:'Be Vietnam Pro',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:#0B72AE}a:hover{color:#063E62}
+  .wrap{max-width:940px;margin:0 auto;padding:48px 32px 48px}
+  h1{font:800 32px/32px 'Baloo 2',sans-serif;color:#0B3B58;margin:0}
+  .sub{font:500 16px/24px 'Be Vietnam Pro',sans-serif;color:#5A7488;margin:8px 0 32px;max-width:600px}
+  h2{font:700 13px/20px 'Be Vietnam Pro',sans-serif;letter-spacing:1.8px;color:#0B72AE;margin:32px 0 16px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+  .card{display:block;padding:16px 16px;border-radius:24px;background:#fff;box-shadow:0 3px 0 #DDEAF3;text-decoration:none;transition:transform .16s}
+  .card:active{transform:translateY(3px);box-shadow:0 0 0 #DDEAF3}
+  .t{font:700 15px/22px 'Baloo 2',sans-serif;color:#0B3B58}
+  .d{font:500 13px/20px 'Be Vietnam Pro',sans-serif;color:#5A7488;margin-top:4px}
+  .note{margin-top:32px;padding:16px 24px;border-radius:24px;background:#fff;border:1px solid #DDEAF3;font:500 13px/20px 'Be Vietnam Pro',sans-serif;color:#5A7488}
+  code{background:#EAF6FD;padding:2px 4px;border-radius:4px;font-size:13px;line-height:20px}
+</style>
 </head>
 <body>
-  <main class="shell">
-    <header class="hero">
-      <p class="eyebrow">Interactive product flows</p>
-      <h1>BlueRise Storyboards</h1>
-      <p class="lead">Bộ giao diện mô phỏng các luồng chính của sản phẩm BlueRise. Chọn một mô-đun để mở storyboard tương tác trong tab hiện tại.</p>
-      <div class="meta">
-        <span class="pill">12 mô-đun</span>
-        <span class="pill">GitHub Pages ready</span>
-        <span class="pill">Cập nhật 31.07.2026</span>
-      </div>
-    </header>
+<div class="wrap">
+<h1>Toàn bộ thiết kế</h1>
+<p class="sub">Bản đầy đủ như thiết kế — có UI, chữ, form, tương tác. Mở trực tiếp bằng browser, không cần cài gì. Mỗi storyboard là các màn của một luồng đặt cạnh nhau, kèm ghi chú motion và bảng token ở cuối trang.</p>
 
-    <div class="section-head">
-      <h2>Danh sách luồng</h2>
-      <p>Các file hoạt động độc lập và không cần bước build.</p>
-    </div>
+<h2>BLUERISE — STORYBOARD THEO LUỒNG</h2>
+<div class="grid">
+  <a class="card" href="apps/BlueRise-Login-Flow-storyboard.html">
+    <div class="t">Đăng nhập</div>
+    <div class="d">6 màn · SĐT, mật khẩu, kênh OTP, xác thực, tạo mật khẩu, chọn học sinh.</div>
+  </a>
+  <a class="card" href="apps/BlueRise-Absence-Flow-storyboard.html">
+    <div class="t">Xin nghỉ phép</div>
+    <div class="d">7 màn · chip lọc, timeline duyệt, xác nhận huỷ, sửa đơn khoá ngày.</div>
+  </a>
+  <a class="card" href="apps/BlueRise-Feedback-Flow-storyboard.html">
+    <div class="t">Góp ý</div>
+    <div class="d">6 màn · card hội thoại, vòng đời xử lý, kết quả xử lý, thread chat.</div>
+  </a>
+  <a class="card" href="apps/BlueRise-Notifications-Flow-storyboard.html">
+    <div class="t">Thông báo</div>
+    <div class="d">6 màn · chuông rung realtime, 3 tín hiệu chưa đọc, sheet chi tiết 7 khối.</div>
+  </a>
+  <a class="card" href="apps/BlueRise-Lookup-Flow-storyboard.html">
+    <div class="t">Tra cứu điểm thi (tuyển sinh)</div>
+    <div class="d">10 màn · luồng công khai không cần đăng nhập: tra cứu, điểm thi, phản hồi có OTP, chọn gói, QR, ghi danh.</div>
+  </a>
+  <a class="card" href="apps/BlueRise-Settlement-Flow-storyboard.html">
+    <div class="t">Quyết toán lớp học</div>
+    <div class="d">8 màn · báo cáo bế giảng, 4 chỉ số buổi, 2 thẻ bảo lưu/hoàn tiền, timeline duyệt, phiếu hoàn tiền.</div>
+  </a>
+  <a class="card" href="apps/BlueRise-Rewards-Flow-storyboard.html">
+    <div class="t">Đổi quà &amp; Thành tựu</div>
+    <div class="d">8 màn · dashboard sticker 3 chỉ số, cửa hàng quà có ảnh, phiếu đổi quà, danh sách yêu cầu, moment nhận quà.</div>
+  </a>
+  <a class="card" href="apps/BlueRise-Tuition-Flow-storyboard.html">
+    <div class="t">Học phí</div>
+    <div class="d">11 màn · tổng cần đóng, so sánh phương án theo đơn giá/buổi, luồng thanh toán ví + QR, chờ realtime, thành công.</div>
+  </a>
+  <a class="card" href="apps/BlueRise-Assessments-Flow-storyboard.html">
+    <div class="t">Bài tập &amp; Kiểm tra</div>
+    <div class="d">14 màn · chip có số đếm, hạn nộp phân bậc, phòng thi có timer, 9 loại câu, chữa bài, và luồng nộp bài offline bằng ảnh chụp vở / file.</div>
+  </a>
+  <a class="card" href="apps/BlueRise-Classes-Flow-storyboard.html">
+    <div class="t">Lớp học</div>
+    <div class="d">6 màn · card có lịch tuần + vòng %, hub 2+3, lộ trình dạng path, câu chuyện học thử.</div>
+  </a>
+  <a class="card" href="apps/BlueRise-Timetable-Flow-storyboard.html">
+    <div class="t">Lịch học</div>
+    <div class="d">9 màn · rail tuần có chấm buổi, buổi đang học có tiến độ, chế độ tháng, chi tiết buổi.</div>
+  </a>
+  <a class="card" href="apps/BlueRise-Account-Flow-storyboard.html">
+    <div class="t">Tài khoản / Hồ sơ học sinh</div>
+    <div class="d">8 màn · thẻ hồ sơ chỉ-đọc, yêu cầu chỉnh sửa, đổi học sinh, camera check-in.</div>
+  </a>
+</div>
 
-    <section class="grid" aria-label="Danh sách storyboard">
-      <a class="card" href="dashboard.html"><div><div class="icon">⌂</div><h3>Dashboard</h3><p>Tổng quan, điều hướng và các điểm truy cập chính của ứng dụng.</p></div><div class="open"><span>Mở storyboard</span><span class="arrow">→</span></div></a>
-      <a class="card" href="lookup.html"><div><div class="icon">⌕</div><h3>Lookup</h3><p>Luồng tra cứu thông tin và truy cập dữ liệu đầu vào.</p></div><div class="open"><span>Mở storyboard</span><span class="arrow">→</span></div></a>
-      <a class="card" href="classes.html"><div><div class="icon">▦</div><h3>Classes</h3><p>Danh sách lớp, chi tiết lớp và các tác vụ liên quan.</p></div><div class="open"><span>Mở storyboard</span><span class="arrow">→</span></div></a>
-      <a class="card" href="timetable.html"><div><div class="icon">▣</div><h3>Timetable</h3><p>Lịch học, lịch biểu và thông tin buổi học.</p></div><div class="open"><span>Mở storyboard</span><span class="arrow">→</span></div></a>
-      <a class="card" href="absence.html"><div><div class="icon">⌁</div><h3>Absence</h3><p>Danh sách, tạo, xem chi tiết, sửa và huỷ đơn xin nghỉ trong một storyboard duy nhất.</p></div><div class="open"><span>Mở storyboard</span><span class="arrow">→</span></div></a>
-      <a class="card" href="assessments.html"><div><div class="icon">✓</div><h3>Assessments</h3><p>Bài tập, bài kiểm tra và trạng thái đánh giá.</p></div><div class="open"><span>Mở storyboard</span><span class="arrow">→</span></div></a>
-      <a class="card" href="notifications.html"><div><div class="icon">♢</div><h3>Notifications</h3><p>Thông báo, phân loại trạng thái và điều hướng ngữ cảnh.</p></div><div class="open"><span>Mở storyboard</span><span class="arrow">→</span></div></a>
-      <a class="card" href="feedback.html"><div><div class="icon">◌</div><h3>Feedback</h3><p>Phản hồi, trao đổi và theo dõi nội dung đã gửi.</p></div><div class="open"><span>Mở storyboard</span><span class="arrow">→</span></div></a>
-      <a class="card" href="tuition.html"><div><div class="icon">₫</div><h3>Tuition</h3><p>Thông tin học phí, khoản thu và trạng thái thanh toán.</p></div><div class="open"><span>Mở storyboard</span><span class="arrow">→</span></div></a>
-      <a class="card" href="settlement.html"><div><div class="icon">▤</div><h3>Settlement</h3><p>Quyết toán, đối soát và tổng hợp các khoản liên quan.</p></div><div class="open"><span>Mở storyboard</span><span class="arrow">→</span></div></a>
-      <a class="card" href="rewards.html"><div><div class="icon">★</div><h3>Rewards</h3><p>Điểm thưởng, thành tích và các nội dung ghi nhận.</p></div><div class="open"><span>Mở storyboard</span><span class="arrow">→</span></div></a>
-      <a class="card" href="account.html"><div><div class="icon">●</div><h3>Account</h3><p>Hồ sơ, thiết lập tài khoản và thông tin người dùng.</p></div><div class="open"><span>Mở storyboard</span><span class="arrow">→</span></div></a>
-    </section>
+<h2>BLUESKY — APP CÓ TƯƠNG TÁC</h2>
+<div class="grid">
+  <a class="card" href="apps/BlueSky-Dashboard.html">
+    <div class="t">Dashboard + Bảng tin</div>
+    <div class="d">Trang chủ, chart, nhiệm vụ tick được, sheet thông báo &amp; hotline, chi tiết buổi học, màn Bảng tin. Bấm tab dưới để đổi màn.</div>
+  </a>
+  <a class="card" href="apps/BlueSky-Bang-tin-phuong-an.html">
+    <div class="t">Bảng tin — 3 phương án</div>
+    <div class="d">Bento · Ngăn xếp vuốt · Số báo, kèm bản hiện tại để so sánh và ghi chú đánh đổi từng hướng.</div>
+  </a>
+  <a class="card" href="apps/BlueSky-Bang-tin-Editorial.html">
+    <div class="t">Bảng tin — hướng Editorial</div>
+    <div class="d">Phương án phá cách bằng typography. Bấm hero hoặc bài viết để mở chi tiết.</div>
+  </a>
+</div>
 
-    <footer><span>BlueRise product storyboard collection</span><span>Static HTML · GitHub Pages</span></footer>
-  </main>
+<h2>XIN NGHỈ PHÉP — TỪNG MÀN RIÊNG (430×932)</h2>
+<div class="grid">
+  <a class="card" href="absence/01-absence-list.html"><div class="t">01 · Danh sách đơn</div><div class="d"><code>/absence</code> · có chip lọc</div></a>
+  <a class="card" href="absence/02-absence-empty.html"><div class="t">02 · Chưa có đơn</div><div class="d">Empty state có minh hoạ</div></a>
+  <a class="card" href="absence/03-absence-create-top.html"><div class="t">03 · Tạo đơn — phần trên</div><div class="d"><code>/absence/create</code> · ngày &amp; buổi học</div></a>
+  <a class="card" href="absence/04-absence-create-bottom.html"><div class="t">04 · Tạo đơn — phần dưới</div><div class="d">Lý do, file đính kèm, gửi đơn</div></a>
+  <a class="card" href="absence/05-absence-detail.html"><div class="t">05 · Chi tiết đơn</div><div class="d"><code>/absence/[id]</code> · timeline + buổi + file</div></a>
+  <a class="card" href="absence/06-absence-cancel-confirm.html"><div class="t">06 · Xác nhận huỷ</div><div class="d">Sheet xác nhận trước khi huỷ</div></a>
+  <a class="card" href="absence/07-absence-edit.html"><div class="t">07 · Sửa đơn</div><div class="d"><code>/absence/[id]/edit</code> · ngày bị khoá</div></a>
+</div>
+
+<h2>LUỒNG ĐĂNG NHẬP — TỪNG MÀN RIÊNG (430×932)</h2>
+<div class="grid">
+  <a class="card" href="login/01-login.html"><div class="t">01 · Nhập số điện thoại</div><div class="d"><code>/login</code></div></a>
+  <a class="card" href="login/02-login-password.html"><div class="t">02 · Nhập mật khẩu</div><div class="d"><code>/login-password</code> · kèm state lỗi</div></a>
+  <a class="card" href="login/03-login-otp-channel.html"><div class="t">03 · Chọn kênh OTP</div><div class="d"><code>/login-otp-channel</code> · đang gửi</div></a>
+  <a class="card" href="login/04-login-otp-verify.html"><div class="t">04 · Nhập mã OTP</div><div class="d"><code>/login-otp-verify</code> · đếm ngược</div></a>
+  <a class="card" href="login/05-login-set-password.html"><div class="t">05 · Tạo mật khẩu</div><div class="d"><code>/login-set-password</code></div></a>
+  <a class="card" href="login/06-login-select-student.html"><div class="t">06 · Chọn học sinh</div><div class="d"><code>/login-select-student</code> · nhiều con</div></a>
+</div>
+
+<h2>MÀN NỀN + UI (300×640)</h2>
+<div class="grid">
+  <a class="card" href="screens/1a-splash.html"><div class="t">1a · Splash</div><div class="d">Logo, tên app, tagline trên trời gradient</div></a>
+  <a class="card" href="screens/1b-home.html"><div class="t">1b · Home</div><div class="d">Header sóng + card nội dung</div></a>
+  <a class="card" href="screens/1d-onboarding.html"><div class="t">1d · Onboarding</div><div class="d">Khinh khí cầu + title, body, CTA</div></a>
+  <a class="card" href="screens/1e-dark.html"><div class="t">1e · Dark mode</div><div class="d">Trời đêm + card tối</div></a>
+  <a class="card" href="screens/1f-login.html"><div class="t">1f · Login</div><div class="d">Blob mềm + 2 field và nút</div></a>
+</div>
+
+<div class="note">
+<b style="color:#0B3B58">Ghi chú</b><br/>
+Các file trong <code>login/</code> và <code>screens/</code> là một màn/một file, tự scale vừa mọi kích thước màn hình (scale contain, nền letterbox cùng màu brand).<br/>
+Toàn bộ file trong <code>apps/</code> là bản tự chứa — font, icon và toàn bộ tương tác đã nhúng sẵn, chạy offline.<br/>
+<code>HANDOFF.md</code> là tài liệu hệ thống thiết kế: token màu, công thức dựng minh hoạ, map nền → màn hình, cách nhúng theo từng platform.<br/>
+Asset nền thuần (SVG/PNG, không logo không chữ) nằm ở các thẻ tải riêng trước đó — dùng khi cần đặt nền dưới UI thật của app.
+</div>
+</div>
 </body>
 </html>
