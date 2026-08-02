@@ -10,3 +10,9 @@ Bộ website tĩnh đã được chuẩn hóa để triển khai trực tiếp b
 4. Chọn branch `main` và thư mục `/ (root)`.
 
 Trang vào chính: `index.html`.
+
+## Messages flow
+
+- Trang: `apps/BlueRise-Messages-Flow-storyboard.html`
+- Runtime đi kèm: `apps/support.js`
+- Cần kết nối Internet để tải React, Google Fonts và Font Awesome từ CDN.

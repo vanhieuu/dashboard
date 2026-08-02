@@ -45,6 +45,10 @@
     <div class="t">Thông báo</div>
     <div class="d">6 màn · chuông rung realtime, 3 tín hiệu chưa đọc, sheet chi tiết 7 khối.</div>
   </a>
+  <a class="card" href="apps/BlueRise-Messages-Flow-storyboard.html">
+    <div class="t">Tin nhắn</div>
+    <div class="d">12 màn · danh sách hội thoại, danh bạ theo lớp, chat module, media, trạng thái kết nối, khiếu nại và CSAT.</div>
+  </a>
   <a class="card" href="apps/BlueRise-Lookup-Flow-storyboard.html">
     <div class="t">Tra cứu điểm thi (tuyển sinh)</div>
     <div class="d">10 màn · luồng công khai không cần đăng nhập: tra cứu, điểm thi, phản hồi có OTP, chọn gói, QR, ghi danh.</div>
@@ -128,7 +132,7 @@
 <div class="note">
 <b style="color:#0B3B58">Ghi chú</b><br/>
 Các file trong <code>login/</code> và <code>screens/</code> là một màn/một file, tự scale vừa mọi kích thước màn hình (scale contain, nền letterbox cùng màu brand).<br/>
-Toàn bộ file trong <code>apps/</code> là bản tự chứa — font, icon và toàn bộ tương tác đã nhúng sẵn, chạy offline.<br/>
+Các storyboard đã đóng gói trong <code>apps/</code> có thể mở trực tiếp. Riêng luồng <b>Tin nhắn</b> dùng runtime <code>apps/support.js</code> đi kèm và cần kết nối mạng để tải React, font cùng bộ icon từ CDN.<br/>
 <code>HANDOFF.md</code> là tài liệu hệ thống thiết kế: token màu, công thức dựng minh hoạ, map nền → màn hình, cách nhúng theo từng platform.<br/>
 Asset nền thuần (SVG/PNG, không logo không chữ) nằm ở các thẻ tải riêng trước đó — dùng khi cần đặt nền dưới UI thật của app.
 </div>
