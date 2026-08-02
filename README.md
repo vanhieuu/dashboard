@@ -16,3 +16,8 @@ Trang vào chính: `index.html`.
 - Trang: `apps/BlueRise-Messages-Flow-storyboard.html`
 - Runtime đi kèm: `apps/support.js`
 - Cần kết nối Internet để tải React, Google Fonts và Font Awesome từ CDN.
+
+## Bản cập nhật giao diện
+
+- `index.html` đã được thiết kế lại thành thư viện responsive có tìm kiếm và bộ lọc.
+- Luồng Góp ý chỉ còn một tệp chuẩn: `apps/BlueRise-Feedback-Flow-storyboard.html`.
