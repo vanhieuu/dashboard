@@ -1,131 +1,57 @@
-# BlueSky — Background Illustration System (Hand-off)
-
-Bộ nền cartoon dùng chung cho app mobile BlueSky. `1a, 1b, 1d, 1e, 1f` là **một bộ thống nhất** (cùng bảng màu, cùng cách vẽ mây/sóng, cùng gradient trời). `1c` (pattern) là biến thể phụ, cùng bảng màu nhưng ngôn ngữ hình khác (tile lặp).
-
-Agent đọc file này để (a) dùng đúng nền cho đúng màn hình, (b) vẽ thêm nền mới **đúng style** khi cần.
-
----
-
-## 1. Tokens
-
-### Màu (bắt buộc — không thêm màu mới)
-
-| Token | Hex | Dùng cho |
-|---|---|---|
-| `sky/900` | `#04182A` | đỉnh gradient dark mode |
-| `sky/800` | `#063E62` | đỉnh gradient splash, text đậm trên nền sáng: `#0B3B58` |
-| `sky/700` | `#083E63` | nền dark mode giữa |
-| `primary` | `#0B72AE` | **primary brand**, thân gradient, mây silhouette dark |
-| `sky/500` | `#1B9BD8` | điểm sáng gradient (header, khinh khí cầu) |
-| `sky/400` | `#6FC6EE` | mây/sóng lớp giữa, ngôi sao nhỏ |
-| `sky/300` | `#8FD6F2` | đỉnh gradient onboarding |
-| `sky/200` | `#D6EEF9` | mây pale, blob mềm, chân gradient |
-| `sky/100` | `#EAF6FD` | sóng lớp dưới, card dark-mode viền |
-| `sky/50` | `#F2F9FD` / `#F5FAFD` / `#FBFDFF` | nền page sáng |
-| `white` | `#FFFFFF` | mây tiền cảnh, sóng đỉnh |
-| `sun/400` | `#FFD166` | **accent duy nhất** — mặt trời, sao, chi tiết nhỏ |
-| `sun/300` | `#FFE29A` / `#FFF3CF` | nhân mặt trời, mặt trăng |
-| `sun/500` | `#F0B429` / `#FFB74D` | giỏ khinh khí cầu |
-
-Quy tắc: tối đa **1 accent vàng** trên mỗi nền, diện tích < 6% khung. Không dùng đỏ/xanh lá/tím.
-
-### Typography (chỉ cho UI, nền không chứa chữ)
-- Heading: **Baloo 2** — 700/800
-- Body / UI: **Nunito** — 400/600/700
-- Nền SVG/PNG **không có text** ⇒ đổi font không ảnh hưởng asset.
-
-### Bán kính & độ nổi
-- Card: `18px` (nền sáng) · `18px` + `border 1px rgba(255,255,255,.14)` (dark)
-- Button: `23px` (pill 46px cao)
-- Shadow trên nền xanh: `0 10px 24px rgba(11,114,174,.14)`
-
----
-
-## 2. Ngôn ngữ hình (illustration grammar)
-
-Nếu cần vẽ nền mới, tuân thủ đúng 5 primitive này — **không dùng path phức tạp, không outline, không texture**:
-
-1. **Mây** = 3 ellipse + 1 rect bo tròn, gộp trong `<g>` một màu duy nhất, không viền.
-   ```
-   <g fill="#fff" opacity="0.5">
-     <ellipse cx="X"   cy="Y"   rx="R"     ry="R*0.62"/>   <!-- bướu chính -->
-     <ellipse cx="X-R*0.8" cy="Y+R*0.2" rx="R*0.62" ry="R*0.42"/>
-     <ellipse cx="X+R*0.7" cy="Y+R*0.2" rx="R*0.57" ry="R*0.40"/>
-     <rect x="X-R*1.05" y="Y+R*0.1" width="R*2.2" height="R*0.5" rx="R*0.25"/>
-   </g>
-   ```
-   Chiều sâu bằng **opacity**, không bằng màu: xa `0.16–0.28` → giữa `0.45–0.55` → gần `0.85–1.0`.
-
-2. **Sóng / dải đất** = cubic bezier 3 đoạn, biên độ 20–28px trên khung 300 rộng, luôn đóng xuống đáy:
-   `M0,Y C48,Y-26 92,Y+28 148,Y+8 C206,Y-13 246,Y+36 300,Y+16 L300,640 L0,640 Z`
-   Xếp 2–3 lớp, mỗi lớp lệch xuống 30–36px, màu sáng dần về phía dưới.
-
-3. **Mặt trời / trăng** = `radialGradient` glow (r ≈ 2.6× nhân) + circle nhân đặc. Không tia, không mặt.
-
-4. **Sao** = circle r 1.1–2.6 (opacity 0.5–0.9) hoặc ngôi sao 5 cánh polygon nhỏ, chỉ 1 cái mỗi nền.
-
-5. **Blob** = 1 path bezier kín, tràn ra ngoài canvas ≥ 30px, luôn có `clipPath` khung.
-
-Cấm: gradient nhiều hơn 3 stop, drop-shadow trên hình minh hoạ, chi tiết < 2px (biến mất ở @1x), nhân vật có mặt/mắt trừ khi được duyệt riêng.
-
----
-
-## 3. Bộ nền & màn hình áp dụng
-
-| ID | File | Dùng cho | Vùng an toàn cho UI |
-|---|---|---|---|
-| `1a` | `01-splash-sky` | Splash, launch screen, màn hình chào | giữa khung (logo + tagline); tránh 0–25% trên (mặt trời) |
-| `1b` | `02-wave-header` | Home / Dashboard — header xanh, body sáng | body dưới y≈40%; header chứa greeting + avatar |
-| `1c` | `03-pattern-light` + tile | List, Settings, Profile, màn nhiều text | toàn khung (nền rất nhạt) |
-| `1d` | `04-onboarding-balloon` | Onboarding, empty state, success | **dưới y=66% là vùng trắng thuần** cho title/body/CTA |
-| `1e` | `05-night-dark` | Dark mode toàn app | y 18%–58% trống; trăng ở góc trên phải |
-| `1f` | `06-soft-blob` | Login, Register, OTP, form | giữa khung; blob nằm ở 4 góc |
-
-**Contrast:** text trắng chỉ đặt trên vùng ≥ `#0B72AE`; text đậm dùng `#0B3B58` trên `sky/50–200`. Trên `1b`, nội dung body **phải** nằm trên card trắng, không đặt text trực tiếp lên vùng sóng chuyển tiếp.
-
----
-
-## 4. File & cách nhúng
-
-```
-svg-production/
-  01-splash-sky-1290x2796.svg        # 1290×2796, preserveAspectRatio="xMidYMid slice"
-  02-wave-header-1290x2796.svg
-  03-pattern-light-1290x2796.svg
-  03-pattern-tile-seamless.svg       # 75×75 tile, có nền
-  03-pattern-tile-transparent.svg    # 75×75 tile, nền trong suốt
-  04-onboarding-balloon-1290x2796.svg
-  05-night-dark-1290x2796.svg
-  06-soft-blob-1290x2796.svg
-png-production/
-  <name>_1290x2796_3x.png | _1170x2532_2x.png | _1080x2400_1x.png
-svg/                                  # bản gốc 300×640 (source of truth để chỉnh sửa)
-```
-
-**Ưu tiên SVG.** Chỉ dùng PNG khi platform không render SVG tốt (widget, notification, launch storyboard iOS).
-
-Web / React Native (react-native-svg):
-```
-背景: full-bleed, resizeMode="cover" / preserveAspectRatio="xMidYMid slice"
-```
-```css
-/* web */
-.screen { background: #0B72AE url('01-splash-sky-1290x2796.svg') center/cover no-repeat; }
-/* pattern: dùng tile, KHÔNG dùng bản 1290 */
-.list   { background: #F2F9FD url('03-pattern-tile-seamless.svg') 0 0/150px 150px repeat; }
-```
-Flutter: `SvgPicture.asset(..., fit: BoxFit.cover)` · iOS: `.resizable().scaledToFill().clipped()` · Android: `android:scaleType="centerCrop"`.
-
-Luôn set **màu nền fallback** cùng token với nền (`1a`→`#0B72AE`, `1b`→`#F5FAFD`, `1e`→`#083E63`, `1f`→`#FBFDFF`) để không loé trắng khi asset chưa load.
-
----
-
-## 5. Khi cần asset mới — checklist cho agent
-
-1. Author ở canvas **300×640**, sau đó scale ×4.4 và center vào 1290×2796 (giữ `svg/` là source).
-2. Chỉ dùng token màu ở §1 và primitive ở §2.
-3. Chừa vùng an toàn: 0–110px trên (status bar), 90px dưới (home indicator/tab bar) — không đặt chi tiết quan trọng ở đó.
-4. Kiểm tra ở 3 tỉ lệ: 1:1.78, 1:2.0, 1:2.22 — với `slice`, chi tiết bị crop hai bên không được là chi tiết chính.
-5. Kiểm text contrast ≥ 4.5:1 tại vị trí UI thực tế (không chỉ nhìn tổng thể).
-6. Xuất: SVG 1290×2796 + PNG @1x/@2x/@3x, tên `NN-slug`.
-7. Không thêm text/logo vào asset nền — logo là layer UI riêng.
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Thư viện prototype BlueRise / BlueSky kèm checklist theo dõi tiến độ triển khai từng màn hình.">
+<title>BlueRise Implementation Library</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.105.3/dist/umd/supabase.min.js"></script>
+<link rel="stylesheet" href="assets/dashboard.css">
+</head>
+<body>
+<header class="topbar"><div class="topbar-inner">
+<a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span><span class="brand-copy"><strong>BlueRise</strong><span>IMPLEMENTATION LIBRARY</span></span></a>
+<nav class="topnav"><a href="#bluerise">BlueRise</a><a href="#bluesky">BlueSky</a><a href="#absence">Màn riêng</a><a href="#guide">Hướng dẫn</a></nav>
+<div class="header-actions">
+<button class="auth-btn" id="authBtn" type="button"><span class="sync-dot" id="syncDot"></span><span id="authLabel">Đăng nhập đồng bộ</span></button>
+<button class="action-btn" id="exportBtn" title="Xuất checklist"><span>⇩</span><span class="action-label">Xuất JSON</span></button>
+<button class="action-btn" id="importBtn" title="Nhập checklist"><span>⇧</span><span class="action-label">Nhập JSON</span></button>
+<button class="action-btn danger" id="resetBtn" title="Đặt lại checklist"><span>↺</span><span class="action-label">Đặt lại</span></button>
+<input id="importFile" type="file" accept="application/json,.json" hidden>
+</div></div></header>
+<main id="top">
+<section class="hero"><div class="hero-inner"><div>
+<span class="kicker"><i></i> PROTOTYPE + IMPLEMENTATION CHECKLIST</span>
+<h1>Thiết kế và tiến độ trong cùng một nơi.</h1>
+<p class="hero-copy">Mở prototype để review, đánh dấu từng màn đã triển khai, ghi chú phần còn thiếu và theo dõi tiến độ tổng thể. Dữ liệu được lưu cục bộ để dùng offline và đồng bộ qua Supabase sau khi đăng nhập, giúp giữ nguyên tiến độ trên nhiều thiết bị.</p>
+</div><div class="progress-dashboard">
+<div class="progress-ring" id="progressRing"><div class="ring-copy"><strong id="overallPercent">0%</strong><span>HOÀN THÀNH</span></div></div>
+<div class="hero-stats"><div class="stat"><strong id="totalScreens">0</strong><span>màn cần triển khai</span></div><div class="stat todo"><strong id="todoCount">0</strong><span>chưa làm</span></div><div class="stat doing"><strong id="doingCount">0</strong><span>đang làm</span></div><div class="stat done"><strong id="doneCount">0</strong><span>hoàn thành</span></div></div>
+</div></div></section>
+<div class="library">
+<div class="sync-banner" id="syncBanner">Bạn đang dùng chế độ cục bộ. Đăng nhập để đồng bộ checklist giữa máy tính, điện thoại và các trình duyệt khác.</div>
+<div class="toolbar" role="search"><div class="toolbar-main">
+<label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.4-3.4"></path></svg><input id="searchInput" type="search" placeholder="Tìm luồng, màn hình, chức năng hoặc đường dẫn…" autocomplete="off"></label>
+<div class="filter-group" id="categoryFilters"><button class="filter active" data-filter="all">Tất cả</button><button class="filter" data-filter="bluerise">BlueRise</button><button class="filter" data-filter="bluesky">BlueSky</button><button class="filter" data-filter="absence">Xin nghỉ</button><button class="filter" data-filter="login">Đăng nhập</button><button class="filter" data-filter="screens">Visual</button></div>
+</div><div class="toolbar-sub"><div class="status-filters" id="statusFilters"><button class="status-filter active" data-status="all">Mọi trạng thái</button><button class="status-filter" data-status="todo">Chưa làm</button><button class="status-filter" data-status="in-progress">Đang triển khai</button><button class="status-filter" data-status="done">Hoàn thành</button></div><label class="toggle"><input id="hideDone" type="checkbox"><span>Ẩn màn đã hoàn thành</span></label></div></div>
+<div class="summary-strip"><strong id="summaryText">0 / 0 màn đã xong</strong><div class="summary-progress"><i id="summaryBar"></i></div><span id="summaryDetail">0 đang triển khai</span><span class="summary-updated" id="lastUpdated">Chưa có thay đổi</span></div>
+<div id="libraryRoot"></div>
+<div class="empty" id="emptyState"><strong>Không tìm thấy hạng mục phù hợp</strong><span>Thử từ khoá khác hoặc chọn lại bộ lọc trạng thái.</span></div>
+<section class="info-panel" id="guide"><article class="info-card"><h3>Cách dùng checklist</h3><p>Checkbox đánh dấu màn đã hoàn thành. Dropdown cho phép chọn <b>Chưa làm</b>, <b>Đang triển khai</b> hoặc <b>Hoàn thành</b>. Ghi chú được lưu tự động, phù hợp để ghi “xong UI, còn API”, blocker hoặc tên pull request.</p><p>Dữ liệu được lưu bằng <span class="path">localStorage</span> để hoạt động offline và tự động đồng bộ lên <span class="path">Supabase</span> sau khi đăng nhập. Dùng cùng một tài khoản trên thiết bị khác để nhận lại toàn bộ trạng thái và ghi chú.</p></article><article class="info-card"><h3>Quy ước đồng bộ</h3><ul><li>Màn đơn trong <b>Xin nghỉ</b> và <b>Đăng nhập</b> dùng chung ID với storyboard tổng.</li><li>Tick ở một nơi sẽ cập nhật tiến độ ở cả hai nơi.</li><li>Prototype không tách màn được theo metadata được quản lý như một hạng mục triển khai.</li></ul></article></section>
+</div></main>
+<footer><div class="footer-inner"><span>BlueRise / BlueSky · Prototype & implementation tracker</span><span>GitHub Pages · Supabase sync · Offline cache</span></div></footer>
+<div class="auth-modal" id="authModal" aria-hidden="true"><div class="auth-card"><h3 id="authTitle">Đăng nhập đồng bộ</h3><p id="authCopy">Dùng cùng một email và mật khẩu trên mọi thiết bị. Dữ liệu cục bộ hiện tại sẽ được hợp nhất với dữ liệu trên Supabase.</p><form id="authForm"><label class="auth-field"><span>Email</span><input id="authEmail" type="email" autocomplete="email" required></label><label class="auth-field"><span>Mật khẩu</span><input id="authPassword" type="password" autocomplete="current-password" minlength="6" required></label><div class="auth-actions"><button class="auth-secondary" id="authModeBtn" type="button">Tạo tài khoản</button><button class="auth-primary" id="authSubmit" type="submit">Đăng nhập</button></div><div class="auth-message" id="authMessage"></div></form></div></div><div class="account-menu" id="accountMenu"><div class="account-email" id="accountEmail"></div><div class="account-meta" id="accountMeta">Đã bật đồng bộ Supabase</div><button id="signOutBtn" type="button">Đăng xuất khỏi thiết bị này</button></div>
+<div class="toast" id="toast" role="status"></div>
+<noscript><div style="padding:24px;font-family:sans-serif">Trang checklist cần JavaScript để hoạt động.</div></noscript>
+<script src="assets/data-init.js"></script>
+<script src="assets/data-bluerise-1.js"></script>
+<script src="assets/data-bluerise-2.js"></script>
+<script src="assets/data-bluesky.js"></script>
+<script src="assets/data-absence.js"></script>
+<script src="assets/data-login.js"></script>
+<script src="assets/data-screens.js"></script>
+<script src="assets/dashboard.js"></script>
+</body></html>
