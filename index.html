@@ -3,522 +3,98 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Thư viện storyboard và prototype HTML của BlueRise / BlueSky.">
-<title>BlueRise Design Library</title>
+<meta name="description" content="Thư viện prototype BlueRise / BlueSky kèm checklist theo dõi tiến độ triển khai từng màn hình.">
+<title>BlueRise Implementation Library</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#0B3B58;--muted:#5A7488;--soft:#8AA3B4;--line:#DCE9F1;--surface:#fff;--canvas:#F3F8FB;--brand:#0B72AE;--brand-dark:#063E62;--cyan:#37AEE2;--mint:#37E0A5;--sun:#FFD166;--danger:#EF5B4C;--shadow:0 18px 60px rgba(6,62,98,.10)}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--canvas);color:var(--ink);font-family:'Be Vietnam Pro',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-a{color:inherit}
-button,input{font:inherit}
-.topbar{position:sticky;top:0;z-index:20;border-bottom:1px solid rgba(220,233,241,.85);background:rgba(243,248,251,.86);backdrop-filter:blur(18px)}
-.topbar-inner{max-width:1240px;margin:auto;height:72px;padding:0 28px;display:flex;align-items:center;gap:22px}
-.brand{display:flex;align-items:center;gap:12px;text-decoration:none;white-space:nowrap}
-.brand-mark{position:relative;width:38px;height:38px;border-radius:14px;background:linear-gradient(145deg,var(--brand-dark),var(--brand));box-shadow:0 8px 24px rgba(11,114,174,.26)}
-.brand-mark:before,.brand-mark:after{content:"";position:absolute;border-radius:999px;background:#fff}
-.brand-mark:before{width:16px;height:16px;left:8px;top:8px;opacity:.94}
-.brand-mark:after{width:8px;height:8px;right:7px;bottom:7px;background:var(--sun)}
-.brand-copy strong{display:block;font:800 18px/18px 'Baloo 2',sans-serif}
-.brand-copy span{display:block;margin-top:2px;color:var(--soft);font-size:10px;font-weight:700;letter-spacing:1.3px}
-.topnav{margin-left:auto;display:flex;align-items:center;gap:5px}
-.topnav a{padding:9px 11px;border-radius:11px;text-decoration:none;color:var(--muted);font-size:12px;font-weight:600}
-.topnav a:hover{background:#fff;color:var(--brand)}
-.hero{position:relative;overflow:hidden;background:linear-gradient(125deg,#052F49 0%,#075E91 52%,#0B72AE 100%);color:#fff}
-.hero:before{content:"";position:absolute;inset:-40%;background:radial-gradient(circle at 68% 42%,rgba(55,174,226,.55),transparent 24%),radial-gradient(circle at 82% 26%,rgba(255,209,102,.24),transparent 10%),radial-gradient(circle at 18% 80%,rgba(55,224,165,.16),transparent 20%);filter:blur(6px)}
-.hero:after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:40px 40px;mask-image:linear-gradient(to bottom,#000,transparent)}
-.hero-inner{position:relative;z-index:1;max-width:1240px;margin:auto;padding:78px 28px 70px;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(300px,.6fr);gap:56px;align-items:end}
-.kicker{display:inline-flex;align-items:center;gap:8px;padding:7px 11px;border:1px solid rgba(255,255,255,.2);border-radius:999px;background:rgba(255,255,255,.08);font-size:10px;font-weight:700;letter-spacing:1.5px}
-.kicker i{width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 5px rgba(55,224,165,.12)}
-h1{max-width:760px;margin:22px 0 15px;font:800 clamp(40px,6vw,72px)/.95 'Baloo 2',sans-serif;letter-spacing:-2px}
-.hero-copy{max-width:690px;margin:0;color:rgba(255,255,255,.76);font-size:15px;line-height:1.75}
-.hero-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.stat{padding:18px;border:1px solid rgba(255,255,255,.14);border-radius:22px;background:rgba(255,255,255,.08);backdrop-filter:blur(14px)}
-.stat strong{display:block;font:800 28px/30px 'Baloo 2',sans-serif}
-.stat span{display:block;margin-top:5px;color:rgba(255,255,255,.65);font-size:11px;font-weight:600}
-.library{max-width:1240px;margin:auto;padding:32px 28px 72px}
-.toolbar{position:sticky;top:88px;z-index:15;display:flex;gap:12px;align-items:center;margin:-58px 0 38px;padding:14px;border:1px solid rgba(220,233,241,.9);border-radius:24px;background:rgba(255,255,255,.9);box-shadow:var(--shadow);backdrop-filter:blur(18px)}
-.search{flex:1;display:flex;align-items:center;gap:11px;min-width:240px;height:48px;padding:0 15px;border:1px solid var(--line);border-radius:15px;background:#F8FBFD}
-.search svg{width:18px;color:var(--soft);flex:none}
-.search input{width:100%;border:0;outline:0;background:transparent;color:var(--ink);font-size:13px}
-.search input::placeholder{color:var(--soft)}
-.filters{display:flex;gap:7px;overflow:auto;scrollbar-width:none}
-.filter{border:0;padding:10px 13px;border-radius:12px;background:transparent;color:var(--muted);font-size:11px;font-weight:700;white-space:nowrap;cursor:pointer}
-.filter:hover{background:#F3F8FB;color:var(--brand)}
-.filter.active{background:var(--brand);color:#fff;box-shadow:0 5px 12px rgba(11,114,174,.22)}
-.library-section{scroll-margin-top:115px;margin:0 0 58px}
-.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin:0 0 20px}
-.eyebrow{color:var(--brand);font-size:10px;font-weight:800;letter-spacing:1.8px}
-h2{margin:5px 0 7px;font:800 28px/32px 'Baloo 2',sans-serif;letter-spacing:-.3px}
-.section-head p{max-width:720px;margin:0;color:var(--muted);font-size:12px;line-height:1.65}
-.section-count{flex:none;padding:8px 11px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--soft);font-size:10px;font-weight:700}
-.project-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
-.project-card{position:relative;min-height:228px;padding:19px;border:1px solid rgba(220,233,241,.9);border-radius:24px;background:var(--surface);box-shadow:0 4px 0 rgba(210,227,237,.72);text-decoration:none;display:flex;flex-direction:column;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
-.project-card:hover{transform:translateY(-5px);border-color:#BEDAE9;box-shadow:0 18px 40px rgba(6,62,98,.11)}
-.project-card:focus-visible{outline:3px solid rgba(55,174,226,.35);outline-offset:3px}
-.card-top{display:flex;align-items:center;justify-content:space-between}
-.card-icon{width:43px;height:43px;border-radius:14px;background:var(--icon-bg);color:var(--icon-fg);display:grid;place-items:center;font:800 12px/1 'Baloo 2',sans-serif;letter-spacing:.2px}
-.card-arrow{width:32px;height:32px;border-radius:11px;display:grid;place-items:center;background:#F5F9FC;color:var(--soft);font-size:15px;transition:.2s}
-.project-card:hover .card-arrow{background:var(--brand);color:#fff;transform:translate(2px,-2px)}
-.project-card h3{margin:17px 0 7px;font:800 17px/21px 'Baloo 2',sans-serif}
-.project-card p{margin:0;color:var(--muted);font-size:11.5px;line-height:1.62}
-.card-meta{display:flex;justify-content:space-between;gap:8px;margin-top:auto;padding-top:18px;color:var(--soft);font-size:9.5px;font-weight:700;letter-spacing:.25px}
-.card-meta span:last-child{padding:3px 6px;border-radius:6px;background:#F3F8FB}
-.empty{display:none;margin:30px 0 70px;padding:48px 24px;border:1px dashed #BCD5E3;border-radius:26px;text-align:center;background:rgba(255,255,255,.6)}
-.empty strong{display:block;font:800 22px 'Baloo 2',sans-serif}
-.empty span{display:block;margin-top:8px;color:var(--muted);font-size:12px}
-.info-panel{display:grid;grid-template-columns:1.3fr .7fr;gap:16px;margin-top:10px}
-.info-card{padding:24px;border:1px solid var(--line);border-radius:25px;background:#fff}
-.info-card h3{margin:0 0 10px;font:800 18px 'Baloo 2',sans-serif}
-.info-card p,.info-card li{color:var(--muted);font-size:11.5px;line-height:1.7}
-.info-card ul{margin:0;padding-left:18px}
-.path{display:inline-flex;margin:5px 4px 0 0;padding:5px 8px;border-radius:8px;background:#EAF6FD;color:#0B5379;font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace}
-footer{border-top:1px solid var(--line);background:#fff}
-.footer-inner{max-width:1240px;margin:auto;padding:26px 28px;display:flex;justify-content:space-between;gap:20px;color:var(--soft);font-size:10.5px;line-height:1.6}
-.hidden{display:none!important}
-@media(max-width:980px){.hero-inner{grid-template-columns:1fr}.hero-stats{max-width:560px}.project-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.topnav{display:none}.info-panel{grid-template-columns:1fr}}
-@media(max-width:720px){.topbar-inner{padding:0 18px}.hero-inner{padding:58px 18px 70px}h1{letter-spacing:-1px}.library{padding:28px 16px 56px}.toolbar{top:80px;margin-top:-52px;flex-direction:column;align-items:stretch;border-radius:20px}.filters{padding-bottom:1px}.project-grid{grid-template-columns:1fr}.project-card{min-height:205px}.section-head{align-items:flex-start}.section-count{display:none}.hero-stats{grid-template-columns:repeat(2,1fr)}.footer-inner{padding:22px 18px;flex-direction:column}}
+:root{--ink:#0B3B58;--muted:#5A7488;--soft:#8AA3B4;--line:#DCE9F1;--surface:#fff;--canvas:#F2F7FA;--brand:#0B72AE;--brand-dark:#063E62;--cyan:#37AEE2;--mint:#37E0A5;--sun:#FFD166;--danger:#EF5B4C;--violet:#6C48A8;--shadow:0 18px 60px rgba(6,62,98,.10)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--canvas);color:var(--ink);font-family:'Be Vietnam Pro',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit}button,input,select,textarea{font:inherit}.hidden{display:none!important}
+.topbar{position:sticky;top:0;z-index:40;border-bottom:1px solid rgba(220,233,241,.9);background:rgba(242,247,250,.88);backdrop-filter:blur(18px)}.topbar-inner{max-width:1320px;margin:auto;min-height:72px;padding:10px 28px;display:flex;align-items:center;gap:18px}.brand{display:flex;align-items:center;gap:12px;text-decoration:none;white-space:nowrap}.brand-mark{position:relative;width:40px;height:40px;border-radius:15px;background:linear-gradient(145deg,var(--brand-dark),var(--brand));box-shadow:0 8px 24px rgba(11,114,174,.26)}.brand-mark:before,.brand-mark:after{content:"";position:absolute;border-radius:999px;background:#fff}.brand-mark:before{width:17px;height:17px;left:8px;top:8px;opacity:.95}.brand-mark:after{width:8px;height:8px;right:7px;bottom:7px;background:var(--sun)}.brand-copy strong{display:block;font:800 18px/18px 'Baloo 2',sans-serif}.brand-copy span{display:block;margin-top:3px;color:var(--soft);font-size:9.5px;font-weight:700;letter-spacing:1.3px}.topnav{margin-left:auto;display:flex;align-items:center;gap:4px}.topnav a{padding:9px 10px;border-radius:11px;text-decoration:none;color:var(--muted);font-size:11px;font-weight:700}.topnav a:hover{background:#fff;color:var(--brand)}.header-actions{display:flex;gap:7px}.action-btn{height:38px;padding:0 12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--muted);font-size:10.5px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px}.action-btn:hover{border-color:#B7D5E6;color:var(--brand)}.action-btn.danger:hover{border-color:#F2B8B2;color:#B03428;background:#FFF7F6}
+.hero{position:relative;overflow:hidden;background:linear-gradient(125deg,#052F49 0%,#075E91 52%,#0B72AE 100%);color:#fff}.hero:before{content:"";position:absolute;inset:-35%;background:radial-gradient(circle at 70% 42%,rgba(55,174,226,.55),transparent 23%),radial-gradient(circle at 84% 24%,rgba(255,209,102,.26),transparent 10%),radial-gradient(circle at 20% 82%,rgba(55,224,165,.18),transparent 20%);filter:blur(7px)}.hero:after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:40px 40px;mask-image:linear-gradient(to bottom,#000,transparent)}.hero-inner{position:relative;z-index:1;max-width:1320px;margin:auto;padding:72px 28px 78px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(390px,.75fr);gap:54px;align-items:center}.kicker{display:inline-flex;align-items:center;gap:8px;padding:7px 11px;border:1px solid rgba(255,255,255,.2);border-radius:999px;background:rgba(255,255,255,.08);font-size:10px;font-weight:700;letter-spacing:1.5px}.kicker i{width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 5px rgba(55,224,165,.12)}h1{max-width:760px;margin:22px 0 14px;font:800 clamp(40px,5.6vw,68px)/.96 'Baloo 2',sans-serif;letter-spacing:-2px}.hero-copy{max-width:720px;margin:0;color:rgba(255,255,255,.76);font-size:14px;line-height:1.78}.progress-dashboard{display:grid;grid-template-columns:160px 1fr;gap:16px;align-items:stretch}.progress-ring{--pct:0;position:relative;min-height:160px;border:1px solid rgba(255,255,255,.15);border-radius:30px;background:rgba(255,255,255,.08);backdrop-filter:blur(15px);display:grid;place-items:center}.progress-ring:before{content:"";width:112px;height:112px;border-radius:50%;background:conic-gradient(var(--mint) calc(var(--pct)*1%),rgba(255,255,255,.13) 0);display:block}.progress-ring:after{content:"";position:absolute;width:86px;height:86px;border-radius:50%;background:#075D90;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)}.ring-copy{position:absolute;z-index:2;text-align:center}.ring-copy strong{display:block;font:800 28px/28px 'Baloo 2',sans-serif}.ring-copy span{font-size:9.5px;color:rgba(255,255,255,.65);font-weight:700}.hero-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{padding:16px;border:1px solid rgba(255,255,255,.14);border-radius:21px;background:rgba(255,255,255,.08);backdrop-filter:blur(14px)}.stat strong{display:block;font:800 25px/27px 'Baloo 2',sans-serif}.stat span{display:block;margin-top:4px;color:rgba(255,255,255,.64);font-size:10px;font-weight:600}.stat.todo strong{color:#fff}.stat.doing strong{color:var(--sun)}.stat.done strong{color:var(--mint)}
+.library{max-width:1320px;margin:auto;padding:30px 28px 76px}.toolbar{position:sticky;top:86px;z-index:30;margin:-58px 0 24px;padding:13px;border:1px solid rgba(220,233,241,.92);border-radius:25px;background:rgba(255,255,255,.92);box-shadow:var(--shadow);backdrop-filter:blur(18px)}.toolbar-main{display:flex;gap:10px;align-items:center}.search{flex:1;display:flex;align-items:center;gap:11px;min-width:250px;height:47px;padding:0 15px;border:1px solid var(--line);border-radius:15px;background:#F8FBFD}.search svg{width:18px;color:var(--soft);flex:none}.search input{width:100%;border:0;outline:0;background:transparent;color:var(--ink);font-size:12.5px}.search input::placeholder{color:var(--soft)}.filter-group{display:flex;gap:6px;overflow:auto;scrollbar-width:none}.filter{border:0;padding:10px 12px;border-radius:12px;background:transparent;color:var(--muted);font-size:10.5px;font-weight:700;white-space:nowrap;cursor:pointer}.filter:hover{background:#F3F8FB;color:var(--brand)}.filter.active{background:var(--brand);color:#fff;box-shadow:0 5px 12px rgba(11,114,174,.22)}.toolbar-sub{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:10px;padding:10px 4px 0;border-top:1px solid #EDF3F6}.status-filters{display:flex;gap:6px;overflow:auto}.status-filter{border:1px solid var(--line);padding:8px 11px;border-radius:11px;background:#fff;color:var(--muted);font-size:10px;font-weight:700;white-space:nowrap;cursor:pointer}.status-filter.active{border-color:#A9CEE2;background:#EAF6FD;color:#0B72AE}.status-filter[data-status="in-progress"].active{border-color:#E9C66E;background:#FFF8E8;color:#8A5A00}.status-filter[data-status="done"].active{border-color:#92DCC4;background:#EAF8F3;color:#0B7A62}.toggle{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:10.5px;font-weight:600;white-space:nowrap}.toggle input{width:34px;height:19px;appearance:none;border-radius:999px;background:#CBDCE6;position:relative;cursor:pointer;transition:.2s}.toggle input:after{content:"";position:absolute;width:15px;height:15px;left:2px;top:2px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 4px rgba(0,0,0,.2)}.toggle input:checked{background:var(--brand)}.toggle input:checked:after{transform:translateX(15px)}
+.summary-strip{display:flex;align-items:center;gap:14px;margin-bottom:38px;padding:16px 18px;border:1px solid var(--line);border-radius:20px;background:#fff}.summary-strip strong{font:800 17px 'Baloo 2',sans-serif}.summary-strip span{color:var(--muted);font-size:11px}.summary-progress{flex:1;height:8px;border-radius:999px;background:#E5EFF5;overflow:hidden}.summary-progress i{display:block;height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,var(--brand),var(--cyan),var(--mint));transition:width .25s ease}.summary-updated{margin-left:auto;color:var(--soft);font-size:9.5px}
+.library-section{scroll-margin-top:170px;margin:0 0 58px}.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin:0 0 20px}.eyebrow{color:var(--brand);font-size:9.5px;font-weight:800;letter-spacing:1.8px}h2{margin:5px 0 7px;font:800 28px/32px 'Baloo 2',sans-serif}.section-head p{max-width:760px;margin:0;color:var(--muted);font-size:11.5px;line-height:1.65}.section-count{flex:none;padding:8px 11px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--soft);font-size:10px;font-weight:700}.project-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.project-card{position:relative;border:1px solid rgba(220,233,241,.95);border-radius:25px;background:#fff;box-shadow:0 4px 0 rgba(210,227,237,.72);overflow:hidden;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}.project-card:hover{transform:translateY(-3px);border-color:#BDD9E8;box-shadow:0 16px 40px rgba(6,62,98,.10)}.project-main{padding:19px}.card-top{display:flex;align-items:center;justify-content:space-between;gap:12px}.card-icon{width:44px;height:44px;border-radius:14px;background:var(--icon-bg);color:var(--icon-fg);display:grid;place-items:center;font:800 12px 'Baloo 2',sans-serif}.open-link{height:34px;padding:0 11px;border-radius:11px;background:#F3F8FB;color:var(--soft);text-decoration:none;display:flex;align-items:center;gap:6px;font-size:9.5px;font-weight:700}.open-link:hover{background:var(--brand);color:#fff}.project-card h3{margin:16px 0 6px;font:800 17px/21px 'Baloo 2',sans-serif}.project-card .description{min-height:37px;margin:0;color:var(--muted);font-size:11px;line-height:1.62}.card-meta{display:flex;justify-content:space-between;gap:8px;margin-top:14px;color:var(--soft);font-size:9px;font-weight:700}.card-meta span:last-child{padding:3px 6px;border-radius:6px;background:#F3F8FB}.project-progress{margin-top:16px}.progress-line{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:7px}.progress-line span{font-size:9.5px;color:var(--soft);font-weight:700}.progress-line strong{font:800 12px 'Baloo 2',sans-serif;color:var(--ink)}.progress-track{height:7px;border-radius:999px;background:#E5EFF5;overflow:hidden}.progress-track i{display:block;height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,var(--brand),var(--cyan),var(--mint));transition:width .25s}.project-state{position:absolute;top:16px;right:16px;width:9px;height:9px;border-radius:50%;box-shadow:0 0 0 4px rgba(255,255,255,.9)}.project-state.todo{background:#B8CBD7}.project-state.in-progress{background:var(--sun)}.project-state.done{background:var(--mint)}
+.checklist{border-top:1px solid #EDF3F6}.checklist>summary{list-style:none;padding:14px 19px;display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;color:var(--brand);font-size:10.5px;font-weight:800;background:#FBFDFE}.checklist>summary::-webkit-details-marker{display:none}.checklist>summary:after{content:"＋";font-size:15px;color:var(--soft)}.checklist[open]>summary:after{content:"−"}.checklist-body{padding:0 12px 14px;background:#FBFDFE}.project-actions{display:flex;gap:7px;padding:9px 4px 11px}.mini-btn{border:1px solid var(--line);padding:7px 9px;border-radius:9px;background:#fff;color:var(--muted);font-size:9px;font-weight:700;cursor:pointer}.mini-btn:hover{border-color:#A9CEE2;color:var(--brand)}.screen-row{margin:0 0 8px;border:1px solid #E2EDF3;border-radius:15px;background:#fff;overflow:hidden}.screen-main{display:grid;grid-template-columns:auto minmax(0,1fr) 112px;gap:10px;align-items:center;padding:11px}.screen-check{width:18px;height:18px;accent-color:var(--brand);cursor:pointer}.screen-copy{min-width:0}.screen-title{font-size:10.8px;font-weight:700;color:var(--ink);line-height:1.45}.screen-route{margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--soft);font:600 8.5px ui-monospace,SFMono-Regular,Menlo,monospace}.status-select{width:100%;height:32px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--muted);padding:0 7px;font-size:9px;font-weight:700;outline:0}.status-select.todo{background:#F5F8FA}.status-select.in-progress{border-color:#E9D08D;background:#FFF8E8;color:#8A5A00}.status-select.done{border-color:#A7DDCB;background:#EAF8F3;color:#0B7A62}.note-wrap{padding:0 11px 10px 39px}.note-input{width:100%;min-height:34px;max-height:90px;resize:vertical;border:1px solid #E4EDF2;border-radius:9px;background:#F8FBFD;padding:8px 9px;outline:0;color:var(--muted);font-size:9px;line-height:1.45}.note-input:focus{border-color:#9CCBE3;background:#fff;box-shadow:0 0 0 3px rgba(55,174,226,.10)}.screen-row.is-done .screen-title{text-decoration:line-through;color:#8198A8}.screen-row.is-done{opacity:.82}.screen-row.hide-done{display:none}.empty{display:none;margin:30px 0 70px;padding:48px 24px;border:1px dashed #BCD5E3;border-radius:26px;text-align:center;background:rgba(255,255,255,.6)}.empty strong{display:block;font:800 22px 'Baloo 2',sans-serif}.empty span{display:block;margin-top:8px;color:var(--muted);font-size:12px}.info-panel{display:grid;grid-template-columns:1.25fr .75fr;gap:16px}.info-card{padding:23px;border:1px solid var(--line);border-radius:24px;background:#fff}.info-card h3{margin:0 0 10px;font:800 18px 'Baloo 2',sans-serif}.info-card p,.info-card li{color:var(--muted);font-size:11px;line-height:1.72}.info-card ul{margin:0;padding-left:18px}.path{display:inline-flex;margin:4px 3px 0 0;padding:5px 8px;border-radius:8px;background:#EAF6FD;color:#0B5379;font:600 9.5px ui-monospace,SFMono-Regular,Menlo,monospace}footer{border-top:1px solid var(--line);background:#fff}.footer-inner{max-width:1320px;margin:auto;padding:26px 28px;display:flex;justify-content:space-between;gap:20px;color:var(--soft);font-size:10px;line-height:1.6}.toast{position:fixed;right:22px;bottom:22px;z-index:80;max-width:360px;padding:13px 16px;border-radius:14px;background:#063E62;color:#fff;box-shadow:0 15px 45px rgba(6,62,98,.25);font-size:10.5px;line-height:1.5;opacity:0;transform:translateY(10px);pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:none}.toast.success{background:#0B7A62}.toast.error{background:#A83A30}
+@media(max-width:1080px){.hero-inner{grid-template-columns:1fr}.progress-dashboard{max-width:640px}.project-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.topnav{display:none}.info-panel{grid-template-columns:1fr}}
+@media(max-width:760px){.topbar-inner{padding:9px 16px}.brand-copy span{display:none}.header-actions .action-label{display:none}.action-btn{width:38px;padding:0;justify-content:center}.hero-inner{padding:54px 18px 78px}.hero-copy{font-size:12.5px}.progress-dashboard{grid-template-columns:130px 1fr}.progress-ring{min-height:145px}.progress-ring:before{width:100px;height:100px}.progress-ring:after{width:76px;height:76px}.hero-stats{gap:8px}.stat{padding:13px}.stat strong{font-size:21px}.library{padding:28px 15px 58px}.toolbar{top:76px;margin-top:-54px;border-radius:20px}.toolbar-main{flex-direction:column;align-items:stretch}.filter-group{padding-bottom:1px}.toolbar-sub{align-items:flex-start;flex-direction:column}.summary-strip{align-items:flex-start;flex-wrap:wrap}.summary-progress{order:3;flex-basis:100%}.summary-updated{margin-left:0}.project-grid{grid-template-columns:1fr}.section-head{align-items:flex-start}.section-count{display:none}.screen-main{grid-template-columns:auto minmax(0,1fr)}.status-select{grid-column:2}.note-wrap{padding-left:39px}.footer-inner{padding:22px 18px;flex-direction:column}}
+@media(max-width:460px){h1{letter-spacing:-1px}.progress-dashboard{grid-template-columns:1fr}.progress-ring{min-height:135px}.hero-stats{grid-template-columns:repeat(3,1fr)}.hero-stats .stat:first-child{display:none}.stat span{font-size:8.5px}.project-main{padding:17px}.checklist>summary{padding-left:17px;padding-right:17px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
 <body>
-<header class="topbar">
-  <div class="topbar-inner">
-    <a class="brand" href="#top" aria-label="BlueRise Design Library">
-      <span class="brand-mark" aria-hidden="true"></span>
-      <span class="brand-copy"><strong>BlueRise</strong><span>DESIGN LIBRARY</span></span>
-    </a>
-    <nav class="topnav" aria-label="Điều hướng chính">
-      <a href="#bluerise">BlueRise</a><a href="#bluesky">BlueSky</a><a href="#absence">Màn riêng</a><a href="#guide">Hướng dẫn</a>
-    </nav>
-  </div>
-</header>
+<header class="topbar"><div class="topbar-inner">
+<a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span><span class="brand-copy"><strong>BlueRise</strong><span>IMPLEMENTATION LIBRARY</span></span></a>
+<nav class="topnav"><a href="#bluerise">BlueRise</a><a href="#bluesky">BlueSky</a><a href="#absence">Màn riêng</a><a href="#guide">Hướng dẫn</a></nav>
+<div class="header-actions">
+<button class="action-btn" id="exportBtn" title="Xuất checklist"><span>⇩</span><span class="action-label">Xuất JSON</span></button>
+<button class="action-btn" id="importBtn" title="Nhập checklist"><span>⇧</span><span class="action-label">Nhập JSON</span></button>
+<button class="action-btn danger" id="resetBtn" title="Đặt lại checklist"><span>↺</span><span class="action-label">Đặt lại</span></button>
+<input id="importFile" type="file" accept="application/json,.json" hidden>
+</div></div></header>
 <main id="top">
-<section class="hero">
-  <div class="hero-inner">
-    <div>
-      <span class="kicker"><i></i> PROTOTYPE ARCHIVE · GITHUB PAGES</span>
-      <h1>Một thư viện duy nhất cho toàn bộ thiết kế.</h1>
-      <p class="hero-copy">Duyệt các storyboard, prototype tương tác và màn hình độc lập của BlueRise / BlueSky. Mỗi mục mở trực tiếp trong trình duyệt, không cần cài đặt hay chạy build.</p>
-    </div>
-    <div class="hero-stats" aria-label="Thống kê thư viện">
-      <div class="stat"><strong>16</strong><span>luồng cấp ứng dụng</span></div>
-      <div class="stat"><strong>34</strong><span>điểm truy cập HTML</span></div>
-      <div class="stat"><strong>5</strong><span>nhóm nội dung</span></div>
-      <div class="stat"><strong>100%</strong><span>static hosting</span></div>
-    </div>
-  </div>
-</section>
+<section class="hero"><div class="hero-inner"><div>
+<span class="kicker"><i></i> PROTOTYPE + IMPLEMENTATION CHECKLIST</span>
+<h1>Thiết kế và tiến độ trong cùng một nơi.</h1>
+<p class="hero-copy">Mở prototype để review, đánh dấu từng màn đã triển khai, ghi chú phần còn thiếu và theo dõi tiến độ tổng thể. Dữ liệu được lưu trên trình duyệt và có thể xuất thành JSON để chia sẻ hoặc sao lưu.</p>
+</div><div class="progress-dashboard">
+<div class="progress-ring" id="progressRing"><div class="ring-copy"><strong id="overallPercent">0%</strong><span>HOÀN THÀNH</span></div></div>
+<div class="hero-stats"><div class="stat"><strong id="totalScreens">0</strong><span>màn cần triển khai</span></div><div class="stat todo"><strong id="todoCount">0</strong><span>chưa làm</span></div><div class="stat doing"><strong id="doingCount">0</strong><span>đang làm</span></div><div class="stat done"><strong id="doneCount">0</strong><span>hoàn thành</span></div></div>
+</div></div></section>
 <div class="library">
-  <div class="toolbar" role="search">
-    <label class="search">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.4-3.4"></path></svg>
-      <input id="searchInput" type="search" placeholder="Tìm theo tên luồng, chức năng hoặc đường dẫn…" autocomplete="off" aria-label="Tìm kiếm thiết kế">
-    </label>
-    <div class="filters" aria-label="Lọc thư viện">
-      <button class="filter active" data-filter="all">Tất cả</button>
-      <button class="filter" data-filter="bluerise">BlueRise</button>
-      <button class="filter" data-filter="bluesky">BlueSky</button>
-      <button class="filter" data-filter="absence">Xin nghỉ</button>
-      <button class="filter" data-filter="login">Đăng nhập</button>
-      <button class="filter" data-filter="screens">Visual</button>
-    </div>
-  </div>
-  <div id="results">
-<section class="library-section" id="bluerise" data-section="bluerise">
-  <div class="section-head">
-    <div><div class="eyebrow">HỆ SINH THÁI BLUERISE</div><h2>Storyboard theo luồng</h2><p>Các luồng sản phẩm hoàn chỉnh, đặt nhiều màn hình cạnh nhau để đánh giá hành vi, trạng thái và hệ thống thị giác.</p></div>
-    <span class="section-count">13 mục</span>
-  </div>
-  <div class="project-grid">
-<a class="project-card" href="apps/BlueRise-Login-Flow-storyboard.html" target="_blank" rel="noopener" data-category="bluerise" data-search="đăng nhập 6 màn · sđt, mật khẩu, otp, tạo mật khẩu và chọn học sinh. tài khoản · xác thực bluerise">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#EAF6FD;--icon-fg:#0B72AE">LG</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>Đăng nhập</h3>
-  <p>6 màn · SĐT, mật khẩu, OTP, tạo mật khẩu và chọn học sinh.</p>
-  <div class="card-meta"><span>Tài khoản · Xác thực</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="apps/BlueRise-Absence-Flow-storyboard.html" target="_blank" rel="noopener" data-category="bluerise" data-search="xin nghỉ phép 7 màn · danh sách, tạo đơn, tiến trình duyệt, huỷ và chỉnh sửa. dịch vụ học viên bluerise">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#EAF6FD;--icon-fg:#0B72AE">AB</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>Xin nghỉ phép</h3>
-  <p>7 màn · Danh sách, tạo đơn, tiến trình duyệt, huỷ và chỉnh sửa.</p>
-  <div class="card-meta"><span>Dịch vụ học viên</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="apps/BlueRise-Feedback-Flow-storyboard.html" target="_blank" rel="noopener" data-category="bluerise" data-search="góp ý 6 màn · danh sách, tạo góp ý, vòng đời xử lý và hội thoại sau khi gửi. hỗ trợ · hội thoại bluerise">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#EAF6FD;--icon-fg:#0B72AE">FB</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>Góp ý</h3>
-  <p>6 màn · Danh sách, tạo góp ý, vòng đời xử lý và hội thoại sau khi gửi.</p>
-  <div class="card-meta"><span>Hỗ trợ · Hội thoại</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="apps/BlueRise-Notifications-Flow-storyboard.html" target="_blank" rel="noopener" data-category="bluerise" data-search="thông báo 6 màn · trạng thái chưa đọc, nhóm nội dung và sheet chi tiết. realtime · system bluerise">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#EAF6FD;--icon-fg:#0B72AE">NT</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>Thông báo</h3>
-  <p>6 màn · Trạng thái chưa đọc, nhóm nội dung và sheet chi tiết.</p>
-  <div class="card-meta"><span>Realtime · System</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="apps/BlueRise-Messages-Flow-storyboard.html" target="_blank" rel="noopener" data-category="bluerise" data-search="tin nhắn 12 màn · hội thoại, danh bạ theo lớp, media, kết nối, khiếu nại và csat. chat module bluerise">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#EAF6FD;--icon-fg:#0B72AE">MS</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>Tin nhắn</h3>
-  <p>12 màn · Hội thoại, danh bạ theo lớp, media, kết nối, khiếu nại và CSAT.</p>
-  <div class="card-meta"><span>Chat module</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="apps/BlueRise-Lookup-Flow-storyboard.html" target="_blank" rel="noopener" data-category="bluerise" data-search="tra cứu tuyển sinh 10 màn · tra cứu điểm, otp, chọn gói, qr và ghi danh. public flow bluerise">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#EAF6FD;--icon-fg:#0B72AE">LK</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>Tra cứu tuyển sinh</h3>
-  <p>10 màn · Tra cứu điểm, OTP, chọn gói, QR và ghi danh.</p>
-  <div class="card-meta"><span>Public flow</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="apps/BlueRise-Settlement-Flow-storyboard.html" target="_blank" rel="noopener" data-category="bluerise" data-search="quyết toán lớp học 8 màn · báo cáo bế giảng, bảo lưu, hoàn tiền và tiến trình duyệt. tài chính bluerise">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#EAF6FD;--icon-fg:#0B72AE">ST</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>Quyết toán lớp học</h3>
-  <p>8 màn · Báo cáo bế giảng, bảo lưu, hoàn tiền và tiến trình duyệt.</p>
-  <div class="card-meta"><span>Tài chính</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="apps/BlueRise-Rewards-Flow-storyboard.html" target="_blank" rel="noopener" data-category="bluerise" data-search="đổi quà & thành tựu 8 màn · điểm thưởng, cửa hàng quà, phiếu đổi và khoảnh khắc nhận quà. gamification bluerise">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#EAF6FD;--icon-fg:#0B72AE">RW</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>Đổi quà & Thành tựu</h3>
-  <p>8 màn · Điểm thưởng, cửa hàng quà, phiếu đổi và khoảnh khắc nhận quà.</p>
-  <div class="card-meta"><span>Gamification</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="apps/BlueRise-Tuition-Flow-storyboard.html" target="_blank" rel="noopener" data-category="bluerise" data-search="học phí 11 màn · công nợ, phương án đóng, ví, qr, chờ realtime và thành công. thanh toán bluerise">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#EAF6FD;--icon-fg:#0B72AE">TF</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>Học phí</h3>
-  <p>11 màn · Công nợ, phương án đóng, ví, QR, chờ realtime và thành công.</p>
-  <div class="card-meta"><span>Thanh toán</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="apps/BlueRise-Assessments-Flow-storyboard.html" target="_blank" rel="noopener" data-category="bluerise" data-search="bài tập & kiểm tra 14 màn · hạn nộp, phòng thi, nhiều loại câu hỏi, chữa bài và nộp offline. learning flow bluerise">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#EAF6FD;--icon-fg:#0B72AE">AS</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>Bài tập & Kiểm tra</h3>
-  <p>14 màn · Hạn nộp, phòng thi, nhiều loại câu hỏi, chữa bài và nộp offline.</p>
-  <div class="card-meta"><span>Learning flow</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="apps/BlueRise-Classes-Flow-storyboard.html" target="_blank" rel="noopener" data-category="bluerise" data-search="lớp học 6 màn · lịch tuần, tiến độ, hub nội dung, lộ trình và học thử. learning hub bluerise">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#EAF6FD;--icon-fg:#0B72AE">CL</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>Lớp học</h3>
-  <p>6 màn · Lịch tuần, tiến độ, hub nội dung, lộ trình và học thử.</p>
-  <div class="card-meta"><span>Learning hub</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="apps/BlueRise-Timetable-Flow-storyboard.html" target="_blank" rel="noopener" data-category="bluerise" data-search="lịch học 9 màn · tuần, tháng, buổi đang học, tiến độ và chi tiết lịch. schedule bluerise">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#EAF6FD;--icon-fg:#0B72AE">TT</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>Lịch học</h3>
-  <p>9 màn · Tuần, tháng, buổi đang học, tiến độ và chi tiết lịch.</p>
-  <div class="card-meta"><span>Schedule</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="apps/BlueRise-Account-Flow-storyboard.html" target="_blank" rel="noopener" data-category="bluerise" data-search="tài khoản học sinh 8 màn · hồ sơ, yêu cầu chỉnh sửa, đổi học sinh và camera check-in. profile bluerise">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#EAF6FD;--icon-fg:#0B72AE">AC</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>Tài khoản học sinh</h3>
-  <p>8 màn · Hồ sơ, yêu cầu chỉnh sửa, đổi học sinh và camera check-in.</p>
-  <div class="card-meta"><span>Profile</span><span>HTML</span></div>
-</a>
-  </div>
-</section>
-<section class="library-section" id="bluesky" data-section="bluesky">
-  <div class="section-head">
-    <div><div class="eyebrow">BLUESKY</div><h2>Ứng dụng và phương án thiết kế</h2><p>Các bản tương tác cấp ứng dụng và những phương án bố cục dùng để so sánh định hướng.</p></div>
-    <span class="section-count">3 mục</span>
-  </div>
-  <div class="project-grid">
-<a class="project-card" href="apps/BlueSky-Dashboard.html" target="_blank" rel="noopener" data-category="bluesky" data-search="dashboard + bảng tin trang chủ, biểu đồ, nhiệm vụ, thông báo, hotline và bảng tin tương tác. interactive app bluesky">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#EEF0FF;--icon-fg:#4B52A5">DB</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>Dashboard + Bảng tin</h3>
-  <p>Trang chủ, biểu đồ, nhiệm vụ, thông báo, hotline và bảng tin tương tác.</p>
-  <div class="card-meta"><span>Interactive app</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="apps/BlueSky-Bang-tin-phuong-an.html" target="_blank" rel="noopener" data-category="bluesky" data-search="bảng tin · 3 phương án bento, ngăn xếp vuốt và số báo; có ghi chú đánh đổi từng hướng. concept comparison bluesky">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#EEF0FF;--icon-fg:#4B52A5">B3</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>Bảng tin · 3 phương án</h3>
-  <p>Bento, ngăn xếp vuốt và số báo; có ghi chú đánh đổi từng hướng.</p>
-  <div class="card-meta"><span>Concept comparison</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="apps/BlueSky-Bang-tin-Editorial.html" target="_blank" rel="noopener" data-category="bluesky" data-search="bảng tin · editorial phương án nhấn mạnh typography và nhịp biên tập nội dung. editorial direction bluesky">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#EEF0FF;--icon-fg:#4B52A5">ED</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>Bảng tin · Editorial</h3>
-  <p>Phương án nhấn mạnh typography và nhịp biên tập nội dung.</p>
-  <div class="card-meta"><span>Editorial direction</span><span>HTML</span></div>
-</a>
-  </div>
-</section>
-<section class="library-section" id="absence" data-section="absence">
-  <div class="section-head">
-    <div><div class="eyebrow">MÀN ĐƠN LẺ · 430 × 932</div><h2>Xin nghỉ phép</h2><p>Mỗi trạng thái được tách thành một file HTML độc lập để xem, trình bày hoặc kiểm thử riêng.</p></div>
-    <span class="section-count">7 mục</span>
-  </div>
-  <div class="project-grid">
-<a class="project-card" href="absence/01-absence-list.html" target="_blank" rel="noopener" data-category="absence" data-search="01 · danh sách đơn danh sách gần đây và chip lọc trạng thái. /absence absence">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#FFF8E8;--icon-fg:#9A6500">01</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>01 · Danh sách đơn</h3>
-  <p>Danh sách gần đây và chip lọc trạng thái.</p>
-  <div class="card-meta"><span>/absence</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="absence/02-absence-empty.html" target="_blank" rel="noopener" data-category="absence" data-search="02 · trạng thái trống empty state và cta tạo đơn đầu tiên. empty state absence">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#FFF8E8;--icon-fg:#9A6500">02</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>02 · Trạng thái trống</h3>
-  <p>Empty state và CTA tạo đơn đầu tiên.</p>
-  <div class="card-meta"><span>Empty state</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="absence/03-absence-create-top.html" target="_blank" rel="noopener" data-category="absence" data-search="03 · tạo đơn · phần trên chọn ngày nghỉ và các buổi học. /absence/create absence">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#FFF8E8;--icon-fg:#9A6500">03</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>03 · Tạo đơn · Phần trên</h3>
-  <p>Chọn ngày nghỉ và các buổi học.</p>
-  <div class="card-meta"><span>/absence/create</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="absence/04-absence-create-bottom.html" target="_blank" rel="noopener" data-category="absence" data-search="04 · tạo đơn · phần dưới lý do, file đính kèm và hành động gửi. form completion absence">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#FFF8E8;--icon-fg:#9A6500">04</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>04 · Tạo đơn · Phần dưới</h3>
-  <p>Lý do, file đính kèm và hành động gửi.</p>
-  <div class="card-meta"><span>Form completion</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="absence/05-absence-detail.html" target="_blank" rel="noopener" data-category="absence" data-search="05 · chi tiết đơn timeline xử lý, buổi học và file liên quan. /absence/[id] absence">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#FFF8E8;--icon-fg:#9A6500">05</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>05 · Chi tiết đơn</h3>
-  <p>Timeline xử lý, buổi học và file liên quan.</p>
-  <div class="card-meta"><span>/absence/[id]</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="absence/06-absence-cancel-confirm.html" target="_blank" rel="noopener" data-category="absence" data-search="06 · xác nhận huỷ bottom sheet xác nhận hành động huỷ. confirmation absence">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#FFF8E8;--icon-fg:#9A6500">06</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>06 · Xác nhận huỷ</h3>
-  <p>Bottom sheet xác nhận hành động huỷ.</p>
-  <div class="card-meta"><span>Confirmation</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="absence/07-absence-edit.html" target="_blank" rel="noopener" data-category="absence" data-search="07 · sửa đơn chỉnh buổi học, lý do, file; khoảng ngày bị khoá. /absence/[id]/edit absence">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#FFF8E8;--icon-fg:#9A6500">07</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>07 · Sửa đơn</h3>
-  <p>Chỉnh buổi học, lý do, file; khoảng ngày bị khoá.</p>
-  <div class="card-meta"><span>/absence/[id]/edit</span><span>HTML</span></div>
-</a>
-  </div>
-</section>
-<section class="library-section" id="login" data-section="login">
-  <div class="section-head">
-    <div><div class="eyebrow">MÀN ĐƠN LẺ · 430 × 932</div><h2>Đăng nhập</h2><p>Chuỗi màn xác thực tách riêng, phù hợp cho review chi tiết trạng thái và chuyển bước.</p></div>
-    <span class="section-count">6 mục</span>
-  </div>
-  <div class="project-grid">
-<a class="project-card" href="login/01-login.html" target="_blank" rel="noopener" data-category="login" data-search="01 · số điện thoại nhập số điện thoại và bắt đầu xác thực. /login login">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#EAF8F3;--icon-fg:#0B7A62">01</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>01 · Số điện thoại</h3>
-  <p>Nhập số điện thoại và bắt đầu xác thực.</p>
-  <div class="card-meta"><span>/login</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="login/02-login-password.html" target="_blank" rel="noopener" data-category="login" data-search="02 · mật khẩu nhập mật khẩu, bao gồm trạng thái lỗi. /login-password login">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#EAF8F3;--icon-fg:#0B7A62">02</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>02 · Mật khẩu</h3>
-  <p>Nhập mật khẩu, bao gồm trạng thái lỗi.</p>
-  <div class="card-meta"><span>/login-password</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="login/03-login-otp-channel.html" target="_blank" rel="noopener" data-category="login" data-search="03 · chọn kênh otp chọn phương thức nhận mã và trạng thái đang gửi. /login-otp-channel login">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#EAF8F3;--icon-fg:#0B7A62">03</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>03 · Chọn kênh OTP</h3>
-  <p>Chọn phương thức nhận mã và trạng thái đang gửi.</p>
-  <div class="card-meta"><span>/login-otp-channel</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="login/04-login-otp-verify.html" target="_blank" rel="noopener" data-category="login" data-search="04 · xác thực otp nhập mã, đếm ngược và gửi lại. /login-otp-verify login">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#EAF8F3;--icon-fg:#0B7A62">04</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>04 · Xác thực OTP</h3>
-  <p>Nhập mã, đếm ngược và gửi lại.</p>
-  <div class="card-meta"><span>/login-otp-verify</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="login/05-login-set-password.html" target="_blank" rel="noopener" data-category="login" data-search="05 · tạo mật khẩu thiết lập mật khẩu cho tài khoản. /login-set-password login">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#EAF8F3;--icon-fg:#0B7A62">05</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>05 · Tạo mật khẩu</h3>
-  <p>Thiết lập mật khẩu cho tài khoản.</p>
-  <div class="card-meta"><span>/login-set-password</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="login/06-login-select-student.html" target="_blank" rel="noopener" data-category="login" data-search="06 · chọn học sinh chọn hồ sơ khi tài khoản có nhiều học sinh. /login-select-student login">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#EAF8F3;--icon-fg:#0B7A62">06</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>06 · Chọn học sinh</h3>
-  <p>Chọn hồ sơ khi tài khoản có nhiều học sinh.</p>
-  <div class="card-meta"><span>/login-select-student</span><span>HTML</span></div>
-</a>
-  </div>
-</section>
-<section class="library-section" id="screens" data-section="screens">
-  <div class="section-head">
-    <div><div class="eyebrow">VISUAL EXPLORATION · 300 × 640</div><h2>Màn nền và UI</h2><p>Các thử nghiệm nền, ánh sáng, chuyển sắc và bố cục cơ bản của ngôn ngữ thị giác BlueRise.</p></div>
-    <span class="section-count">5 mục</span>
-  </div>
-  <div class="project-grid">
-<a class="project-card" href="screens/1a-splash.html" target="_blank" rel="noopener" data-category="screens" data-search="splash logo, tên ứng dụng và tagline trên nền trời chuyển sắc. visual foundation screens">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#F5EEFF;--icon-fg:#6C48A8">SP</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>Splash</h3>
-  <p>Logo, tên ứng dụng và tagline trên nền trời chuyển sắc.</p>
-  <div class="card-meta"><span>Visual foundation</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="screens/1b-home.html" target="_blank" rel="noopener" data-category="screens" data-search="home header dạng sóng và card nội dung chính. visual foundation screens">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#F5EEFF;--icon-fg:#6C48A8">HM</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>Home</h3>
-  <p>Header dạng sóng và card nội dung chính.</p>
-  <div class="card-meta"><span>Visual foundation</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="screens/1d-onboarding.html" target="_blank" rel="noopener" data-category="screens" data-search="onboarding minh hoạ khinh khí cầu, nội dung giới thiệu và cta. visual foundation screens">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#F5EEFF;--icon-fg:#6C48A8">ON</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>Onboarding</h3>
-  <p>Minh hoạ khinh khí cầu, nội dung giới thiệu và CTA.</p>
-  <div class="card-meta"><span>Visual foundation</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="screens/1e-dark.html" target="_blank" rel="noopener" data-category="screens" data-search="dark mode nền trời đêm và hệ card tối. theme study screens">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#F5EEFF;--icon-fg:#6C48A8">DK</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>Dark mode</h3>
-  <p>Nền trời đêm và hệ card tối.</p>
-  <div class="card-meta"><span>Theme study</span><span>HTML</span></div>
-</a>
-<a class="project-card" href="screens/1f-login.html" target="_blank" rel="noopener" data-category="screens" data-search="login visual blob mềm, hai trường nhập và nút hành động. form study screens">
-  <div class="card-top">
-    <span class="card-icon" style="--icon-bg:#F5EEFF;--icon-fg:#6C48A8">LV</span>
-    <span class="card-arrow" aria-hidden="true">↗</span>
-  </div>
-  <h3>Login visual</h3>
-  <p>Blob mềm, hai trường nhập và nút hành động.</p>
-  <div class="card-meta"><span>Form study</span><span>HTML</span></div>
-</a>
-  </div>
-</section></div>
-  <div class="empty" id="emptyState"><strong>Không tìm thấy thiết kế phù hợp</strong><span>Thử một từ khoá khác hoặc chọn lại bộ lọc “Tất cả”.</span></div>
-  <section class="info-panel" id="guide">
-    <article class="info-card"><h3>Cách sử dụng</h3><p>Mở một thẻ để xem prototype trong tab mới. Các storyboard trong <span class="path">apps/</span> trình bày toàn bộ luồng; các thư mục <span class="path">absence/</span>, <span class="path">login/</span> và <span class="path">screens/</span> chứa từng màn độc lập.</p><p>Luồng Tin nhắn sử dụng <span class="path">apps/support.js</span> và cần Internet để tải React, font cùng icon từ CDN.</p></article>
-    <article class="info-card"><h3>Tài liệu bàn giao</h3><ul><li><b>HANDOFF.md</b>: token, nền, công thức minh hoạ và hướng dẫn tích hợp.</li><li><b>README.md</b>: cấu trúc triển khai GitHub Pages.</li><li><b>.nojekyll</b>: giữ nguyên các tệp static khi publish.</li></ul></article>
-  </section>
-</div>
-</main>
-<footer><div class="footer-inner"><span>BlueRise / BlueSky · Design prototype archive</span><span>Được tối ưu cho GitHub Pages và trình duyệt hiện đại.</span></div></footer>
+<div class="toolbar" role="search"><div class="toolbar-main">
+<label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.4-3.4"></path></svg><input id="searchInput" type="search" placeholder="Tìm luồng, màn hình, chức năng hoặc đường dẫn…" autocomplete="off"></label>
+<div class="filter-group" id="categoryFilters"><button class="filter active" data-filter="all">Tất cả</button><button class="filter" data-filter="bluerise">BlueRise</button><button class="filter" data-filter="bluesky">BlueSky</button><button class="filter" data-filter="absence">Xin nghỉ</button><button class="filter" data-filter="login">Đăng nhập</button><button class="filter" data-filter="screens">Visual</button></div>
+</div><div class="toolbar-sub"><div class="status-filters" id="statusFilters"><button class="status-filter active" data-status="all">Mọi trạng thái</button><button class="status-filter" data-status="todo">Chưa làm</button><button class="status-filter" data-status="in-progress">Đang triển khai</button><button class="status-filter" data-status="done">Hoàn thành</button></div><label class="toggle"><input id="hideDone" type="checkbox"><span>Ẩn màn đã hoàn thành</span></label></div></div>
+<div class="summary-strip"><strong id="summaryText">0 / 0 màn đã xong</strong><div class="summary-progress"><i id="summaryBar"></i></div><span id="summaryDetail">0 đang triển khai</span><span class="summary-updated" id="lastUpdated">Chưa có thay đổi</span></div>
+<div id="libraryRoot"></div>
+<div class="empty" id="emptyState"><strong>Không tìm thấy hạng mục phù hợp</strong><span>Thử từ khoá khác hoặc chọn lại bộ lọc trạng thái.</span></div>
+<section class="info-panel" id="guide"><article class="info-card"><h3>Cách dùng checklist</h3><p>Checkbox đánh dấu màn đã hoàn thành. Dropdown cho phép chọn <b>Chưa làm</b>, <b>Đang triển khai</b> hoặc <b>Hoàn thành</b>. Ghi chú được lưu tự động, phù hợp để ghi “xong UI, còn API”, blocker hoặc tên pull request.</p><p>Dữ liệu lưu bằng <span class="path">localStorage</span> trên trình duyệt hiện tại. Dùng <b>Xuất JSON</b> và <b>Nhập JSON</b> để chuyển dữ liệu sang máy khác hoặc chia sẻ với nhóm.</p></article><article class="info-card"><h3>Quy ước đồng bộ</h3><ul><li>Màn đơn trong <b>Xin nghỉ</b> và <b>Đăng nhập</b> dùng chung ID với storyboard tổng.</li><li>Tick ở một nơi sẽ cập nhật tiến độ ở cả hai nơi.</li><li>Prototype không tách màn được theo metadata được quản lý như một hạng mục triển khai.</li></ul></article></section>
+</div></main>
+<footer><div class="footer-inner"><span>BlueRise / BlueSky · Prototype & implementation tracker</span><span>Static hosting · GitHub Pages · Local-first checklist</span></div></footer>
+<div class="toast" id="toast" role="status"></div>
+<noscript><div style="padding:24px;font-family:sans-serif">Trang checklist cần JavaScript để hoạt động.</div></noscript>
+<script id="libraryData" type="application/json">{"sections":[{"id":"bluerise","eyebrow":"HỆ SINH THÁI BLUERISE","title":"Storyboard theo luồng","description":"Các luồng sản phẩm hoàn chỉnh, đặt nhiều màn hình cạnh nhau để đánh giá hành vi, trạng thái và hệ thống thị giác.","cards":[{"href":"apps/BlueRise-Login-Flow-storyboard.html","category":"bluerise","search":"đăng nhập 6 màn · sđt, mật khẩu, otp, tạo mật khẩu và chọn học sinh. tài khoản · xác thực bluerise đăng nhập 6 màn · sđt, mật khẩu, otp, tạo mật khẩu và chọn học sinh. tài khoản · xác thực apps/bluerise-login-flow-storyboard.html nhập số điện thoại /login nhập mật khẩu · kèm state lỗi /login-password chọn kênh otp · đang gửi /login-otp-channel nhập otp · đang đếm ngược /login-otp-verify tạo mật khẩu /login-set-password chọn học sinh · nhiều con /login-select-student","title":"Đăng nhập","description":"6 màn · SĐT, mật khẩu, OTP, tạo mật khẩu và chọn học sinh.","icon":"LG","iconBg":"#EAF6FD","iconFg":"#0B72AE","meta":"Tài khoản · Xác thực","format":"HTML","screens":[{"id":"login-01","label":"01","name":"Nhập số điện thoại","route":"/login"},{"id":"login-02","label":"02","name":"Nhập mật khẩu · kèm state lỗi","route":"/login-password"},{"id":"login-03","label":"03","name":"Chọn kênh OTP · đang gửi","route":"/login-otp-channel"},{"id":"login-04","label":"04","name":"Nhập OTP · đang đếm ngược","route":"/login-otp-verify"},{"id":"login-05","label":"05","name":"Tạo mật khẩu","route":"/login-set-password"},{"id":"login-06","label":"06","name":"Chọn học sinh · nhiều con","route":"/login-select-student"}],"id":"apps-bluerise-login-flow-storyboard"},{"href":"apps/BlueRise-Absence-Flow-storyboard.html","category":"bluerise","search":"xin nghỉ phép 7 màn · danh sách, tạo đơn, tiến trình duyệt, huỷ và chỉnh sửa. dịch vụ học viên bluerise xin nghỉ phép 7 màn · danh sách, tạo đơn, tiến trình duyệt, huỷ và chỉnh sửa. dịch vụ học viên apps/bluerise-absence-flow-storyboard.html danh sách đơn · có chip lọc /absence trạng thái rỗng · có minh hoạ /absence form — phần trên (ngày & buổi học) /absence/create form — phần dưới (lý do, file, gửi) /absence/create chi tiết đơn · timeline + buổi + file /absence/[id] xác nhận huỷ đơn /absence/[id] sửa đơn · khoảng ngày bị khoá /absence/[id]/edit","title":"Xin nghỉ phép","description":"7 màn · Danh sách, tạo đơn, tiến trình duyệt, huỷ và chỉnh sửa.","icon":"AB","iconBg":"#EAF6FD","iconFg":"#0B72AE","meta":"Dịch vụ học viên","format":"HTML","screens":[{"id":"absence-01","label":"01","name":"Danh sách đơn · có chip lọc","route":"/absence"},{"id":"absence-02","label":"02","name":"Trạng thái rỗng · có minh hoạ","route":"/absence"},{"id":"absence-03","label":"03","name":"Form — phần trên (ngày & buổi học)","route":"/absence/create"},{"id":"absence-04","label":"04","name":"Form — phần dưới (lý do, file, gửi)","route":"/absence/create"},{"id":"absence-05","label":"05","name":"Chi tiết đơn · timeline + buổi + file","route":"/absence/[id]"},{"id":"absence-06","label":"06","name":"Xác nhận huỷ đơn","route":"/absence/[id]"},{"id":"absence-07","label":"07","name":"Sửa đơn · khoảng ngày bị khoá","route":"/absence/[id]/edit"}],"id":"apps-bluerise-absence-flow-storyboard"},{"href":"apps/BlueRise-Feedback-Flow-storyboard.html","category":"bluerise","search":"góp ý 6 màn · danh sách, tạo góp ý, vòng đời xử lý và hội thoại sau khi gửi. hỗ trợ · hội thoại bluerise góp ý 6 màn · danh sách, tạo góp ý, vòng đời xử lý và hội thoại sau khi gửi. hỗ trợ · hội thoại apps/bluerise-feedback-flow-storyboard.html danh sách · tìm kiếm + lọc + card hội thoại /feedback trạng thái rỗng /feedback tạo góp ý · có đính kèm + counter /feedback/create cảnh báo mất nội dung đang gõ /feedback/create chi tiết · vòng đời + kết quả xử lý /feedback/[id] đích đến của \"mở hội thoại\" /messages/[thread]","title":"Góp ý","description":"6 màn · Danh sách, tạo góp ý, vòng đời xử lý và hội thoại sau khi gửi.","icon":"FB","iconBg":"#EAF6FD","iconFg":"#0B72AE","meta":"Hỗ trợ · Hội thoại","format":"HTML","screens":[{"id":"feedback-01","label":"01","name":"Danh sách · tìm kiếm + lọc + card hội thoại","route":"/feedback"},{"id":"feedback-02","label":"02","name":"Trạng thái rỗng","route":"/feedback"},{"id":"feedback-03","label":"03","name":"Tạo góp ý · có đính kèm + counter","route":"/feedback/create"},{"id":"feedback-04","label":"04","name":"Cảnh báo mất nội dung đang gõ","route":"/feedback/create"},{"id":"feedback-05","label":"05","name":"Chi tiết · vòng đời + kết quả xử lý","route":"/feedback/[id]"},{"id":"feedback-06","label":"06","name":"Đích đến của \"Mở hội thoại\"","route":"/messages/[thread]"}],"id":"apps-bluerise-feedback-flow-storyboard"},{"href":"apps/BlueRise-Notifications-Flow-storyboard.html","category":"bluerise","search":"thông báo 6 màn · trạng thái chưa đọc, nhóm nội dung và sheet chi tiết. realtime · system bluerise thông báo 6 màn · trạng thái chưa đọc, nhóm nội dung và sheet chi tiết. realtime · system apps/bluerise-notifications-flow-storyboard.html điểm vào · chuông rung + toast realtime / (home) danh sách · chưa đọc thấy rõ + chip lọc /notifications swipe action + toast hoàn tác /notifications chi tiết · nhận xét gv (rating sao) sheet chi tiết · thanh toán (badge + bảng) sheet trạng thái rỗng /notifications","title":"Thông báo","description":"6 màn · Trạng thái chưa đọc, nhóm nội dung và sheet chi tiết.","icon":"NT","iconBg":"#EAF6FD","iconFg":"#0B72AE","meta":"Realtime · System","format":"HTML","screens":[{"id":"notifications-01","label":"01","name":"Điểm vào · chuông rung + toast realtime","route":"/ (home)"},{"id":"notifications-02","label":"02","name":"Danh sách · chưa đọc thấy rõ + chip lọc","route":"/notifications"},{"id":"notifications-03","label":"03","name":"Swipe action + toast hoàn tác","route":"/notifications"},{"id":"notifications-04","label":"04","name":"Chi tiết · Nhận xét GV (rating sao)","route":"sheet"},{"id":"notifications-05","label":"05","name":"Chi tiết · Thanh toán (badge + bảng)","route":"sheet"},{"id":"notifications-06","label":"06","name":"Trạng thái rỗng","route":"/notifications"}],"id":"apps-bluerise-notifications-flow-storyboard"},{"href":"apps/BlueRise-Messages-Flow-storyboard.html","category":"bluerise","search":"tin nhắn 12 màn · hội thoại, danh bạ theo lớp, media, kết nối, khiếu nại và csat. chat module bluerise tin nhắn 12 màn · hội thoại, danh bạ theo lớp, media, kết nối, khiếu nại và csat. chat module apps/bluerise-messages-flow-storyboard.html danh sách hội thoại · khung app /messages rỗng · cta dẫn sang danh bạ /messages danh bạ theo lớp + profile sheet /messages/contacts màn hội thoại · themed, light chat-module long-press tin · reaction + sheet hành động chat-module thông tin hội thoại · thành viên + kho media chat-module camera của app · chụp gửi ngay /messages/camera kết nối · banner mảnh thay overlay che màn /messages lọc \"khiếu nại\" · thread sinh từ góp ý /messages thread khiếu nại · đang xử lý chat-module đã giải quyết · prompt đánh giá csat chat-module đã đóng · card đánh giá + composer khoá chat-module","title":"Tin nhắn","description":"12 màn · Hội thoại, danh bạ theo lớp, media, kết nối, khiếu nại và CSAT.","icon":"MS","iconBg":"#EAF6FD","iconFg":"#0B72AE","meta":"Chat module","format":"HTML","screens":[{"id":"messages-01","label":"01","name":"Danh sách hội thoại · khung app","route":"/messages"},{"id":"messages-02","label":"02","name":"Rỗng · CTA dẫn sang Danh bạ","route":"/messages"},{"id":"messages-03","label":"03","name":"Danh bạ theo LỚP + profile sheet","route":"/messages/contacts"},{"id":"messages-04","label":"04","name":"Màn hội thoại · themed, light","route":"chat-module"},{"id":"messages-05","label":"05","name":"Long-press tin · reaction + sheet hành động","route":"chat-module"},{"id":"messages-06","label":"06","name":"Thông tin hội thoại · thành viên + kho media","route":"chat-module"},{"id":"messages-07","label":"07","name":"Camera của app · chụp gửi ngay","route":"/messages/camera"},{"id":"messages-08","label":"08","name":"Kết nối · banner mảnh thay overlay che màn","route":"/messages"},{"id":"messages-09","label":"09","name":"Lọc \"Khiếu nại\" · thread sinh từ Góp ý","route":"/messages"},{"id":"messages-10","label":"10","name":"Thread khiếu nại · đang xử lý","route":"chat-module"},{"id":"messages-11","label":"11","name":"Đã giải quyết · prompt đánh giá CSAT","route":"chat-module"},{"id":"messages-12","label":"12","name":"Đã đóng · card đánh giá + composer khoá","route":"chat-module"}],"id":"apps-bluerise-messages-flow-storyboard"},{"href":"apps/BlueRise-Lookup-Flow-storyboard.html","category":"bluerise","search":"tra cứu tuyển sinh 10 màn · tra cứu điểm, otp, chọn gói, qr và ghi danh. public flow bluerise tra cứu tuyển sinh 10 màn · tra cứu điểm, otp, chọn gói, qr và ghi danh. public flow apps/bluerise-lookup-flow-storyboard.html điểm vào duy nhất /login tra cứu · sbd + họ tên b1 bước xong thu gọn · chọn buổi thi b2 · b3 kết quả · điểm thành moment b4 3 phản hồi · thẻ nêu hệ quả b4 xác thực otp · zalo hoặc sms b5 chọn gói · điều khoản có tóm tắt b6 chờ thanh toán · qr + polling sống b7 hoàn tất · conversion moment b8 đã đồng ý ≠ đã ghi danh b4","title":"Tra cứu tuyển sinh","description":"10 màn · Tra cứu điểm, OTP, chọn gói, QR và ghi danh.","icon":"LK","iconBg":"#EAF6FD","iconFg":"#0B72AE","meta":"Public flow","format":"HTML","screens":[{"id":"lookup-01","label":"01","name":"Điểm vào duy nhất","route":"/login"},{"id":"lookup-02","label":"02","name":"Tra cứu · SBD + họ tên","route":"B1"},{"id":"lookup-03","label":"03","name":"Bước xong thu gọn · chọn buổi thi","route":"B2 · B3"},{"id":"lookup-04","label":"04","name":"Kết quả · điểm thành moment","route":"B4"},{"id":"lookup-05","label":"05","name":"3 phản hồi · thẻ nêu hệ quả","route":"B4"},{"id":"lookup-06","label":"06","name":"Xác thực OTP · Zalo hoặc SMS","route":"B5"},{"id":"lookup-07","label":"07","name":"Chọn gói · điều khoản có tóm tắt","route":"B6"},{"id":"lookup-08","label":"08","name":"Chờ thanh toán · QR + polling sống","route":"B7"},{"id":"lookup-09","label":"09","name":"Hoàn tất · conversion moment","route":"B8"},{"id":"lookup-10","label":"10","name":"Đã đồng ý ≠ đã ghi danh","route":"B4"}],"id":"apps-bluerise-lookup-flow-storyboard"},{"href":"apps/BlueRise-Settlement-Flow-storyboard.html","category":"bluerise","search":"quyết toán lớp học 8 màn · báo cáo bế giảng, bảo lưu, hoàn tiền và tiến trình duyệt. tài chính bluerise quyết toán lớp học 8 màn · báo cáo bế giảng, bảo lưu, hoàn tiền và tiến trình duyệt. tài chính apps/bluerise-settlement-flow-storyboard.html điểm vào · lớp đã đóng /classes báo cáo bế giảng · tổng kết học tập /settlement trái tim màn · 2 thẻ so sánh /settlement xác nhận bảo lưu vào gói sheet form hoàn tiền · chọn ngân hàng sheet chờ duyệt · timeline 4 bước /settlement hoàn tất · phiếu hoàn tiền đầy đủ /settlement đã vào gói · và nhánh bị từ chối /settlement","title":"Quyết toán lớp học","description":"8 màn · Báo cáo bế giảng, bảo lưu, hoàn tiền và tiến trình duyệt.","icon":"ST","iconBg":"#EAF6FD","iconFg":"#0B72AE","meta":"Tài chính","format":"HTML","screens":[{"id":"settlement-01","label":"01","name":"Điểm vào · lớp đã đóng","route":"/classes"},{"id":"settlement-02","label":"02","name":"Báo cáo bế giảng · tổng kết học tập","route":"/settlement"},{"id":"settlement-03","label":"03","name":"Trái tim màn · 2 thẻ so sánh","route":"/settlement"},{"id":"settlement-04","label":"04","name":"Xác nhận bảo lưu vào gói","route":"sheet"},{"id":"settlement-05","label":"05","name":"Form hoàn tiền · chọn ngân hàng","route":"sheet"},{"id":"settlement-06","label":"06","name":"Chờ duyệt · timeline 4 bước","route":"/settlement"},{"id":"settlement-07","label":"07","name":"Hoàn tất · phiếu hoàn tiền đầy đủ","route":"/settlement"},{"id":"settlement-08","label":"08","name":"Đã vào gói · và nhánh bị từ chối","route":"/settlement"}],"id":"apps-bluerise-settlement-flow-storyboard"},{"href":"apps/BlueRise-Rewards-Flow-storyboard.html","category":"bluerise","search":"đổi quà & thành tựu 8 màn · điểm thưởng, cửa hàng quà, phiếu đổi và khoảnh khắc nhận quà. gamification bluerise đổi quà & thành tựu 8 màn · điểm thưởng, cửa hàng quà, phiếu đổi và khoảnh khắc nhận quà. gamification apps/bluerise-rewards-flow-storyboard.html điểm vào · bộ đếm bấm được / (home) thành tựu · mỗi dòng một lời khen /achievement đổi quà · cửa hàng phần thưởng /gift chọn số lượng modal 1/2 xác nhận · phiếu đổi quà modal 2/2 yêu cầu của tôi · mảnh còn thiếu /gift/requests nhận quà thành công /gift/requests chưa có sticker · động viên /achievement","title":"Đổi quà & Thành tựu","description":"8 màn · Điểm thưởng, cửa hàng quà, phiếu đổi và khoảnh khắc nhận quà.","icon":"RW","iconBg":"#EAF6FD","iconFg":"#0B72AE","meta":"Gamification","format":"HTML","screens":[{"id":"rewards-01","label":"01","name":"Điểm vào · bộ đếm bấm được","route":"/ (home)"},{"id":"rewards-02","label":"02","name":"Thành tựu · mỗi dòng một lời khen","route":"/achievement"},{"id":"rewards-03","label":"03","name":"Đổi quà · cửa hàng phần thưởng","route":"/gift"},{"id":"rewards-04","label":"04","name":"Chọn số lượng","route":"modal 1/2"},{"id":"rewards-05","label":"05","name":"Xác nhận · phiếu đổi quà","route":"modal 2/2"},{"id":"rewards-06","label":"06","name":"Yêu cầu của tôi · mảnh còn thiếu","route":"/gift/requests"},{"id":"rewards-07","label":"07","name":"Nhận quà thành công","route":"/gift/requests"},{"id":"rewards-08","label":"08","name":"Chưa có sticker · động viên","route":"/achievement"}],"id":"apps-bluerise-rewards-flow-storyboard"},{"href":"apps/BlueRise-Tuition-Flow-storyboard.html","category":"bluerise","search":"học phí 11 màn · công nợ, phương án đóng, ví, qr, chờ realtime và thành công. thanh toán bluerise học phí 11 màn · công nợ, phương án đóng, ví, qr, chờ realtime và thành công. thanh toán apps/bluerise-tuition-flow-storyboard.html cần thanh toán · tổng + bậc khẩn cấp /tuition lịch sử · bức tranh nợ đầy đủ /tuition gói học phí · gói nuôi lớp nào /tuition chọn phương án · so sánh được /invoice/[id] chi tiết đơn · bảng phiếu thu /order/[id] điều khoản thanh toán pay 1/3 ví học phí · thanh tỷ lệ pay 2/3 qr chuyển khoản · dễ copy đúng pay 3/3 chờ tiền vào · realtime /payment/track thành công · kết thúc nhẹ nhõm /payment/success không còn khoản nào · tin tốt /tuition","title":"Học phí","description":"11 màn · Công nợ, phương án đóng, ví, QR, chờ realtime và thành công.","icon":"TF","iconBg":"#EAF6FD","iconFg":"#0B72AE","meta":"Thanh toán","format":"HTML","screens":[{"id":"tuition-01","label":"01","name":"Cần thanh toán · tổng + bậc khẩn cấp","route":"/tuition"},{"id":"tuition-02","label":"02","name":"Lịch sử · bức tranh nợ đầy đủ","route":"/tuition"},{"id":"tuition-03","label":"03","name":"Gói học phí · gói nuôi lớp nào","route":"/tuition"},{"id":"tuition-04","label":"04","name":"Chọn phương án · so sánh được","route":"/invoice/[id]"},{"id":"tuition-05","label":"05","name":"Chi tiết đơn · bảng phiếu thu","route":"/order/[id]"},{"id":"tuition-06","label":"06","name":"Điều khoản thanh toán","route":"pay 1/3"},{"id":"tuition-07","label":"07","name":"Ví học phí · thanh tỷ lệ","route":"pay 2/3"},{"id":"tuition-08","label":"08","name":"QR chuyển khoản · dễ copy đúng","route":"pay 3/3"},{"id":"tuition-09","label":"09","name":"Chờ tiền vào · realtime","route":"/payment/track"},{"id":"tuition-10","label":"10","name":"Thành công · kết thúc nhẹ nhõm","route":"/payment/success"},{"id":"tuition-11","label":"11","name":"Không còn khoản nào · tin tốt","route":"/tuition"}],"id":"apps-bluerise-tuition-flow-storyboard"},{"href":"apps/BlueRise-Assessments-Flow-storyboard.html","category":"bluerise","search":"bài tập & kiểm tra 14 màn · hạn nộp, phòng thi, nhiều loại câu hỏi, chữa bài và nộp offline. learning flow bluerise bài tập & kiểm tra 14 màn · hạn nộp, phòng thi, nhiều loại câu hỏi, chữa bài và nộp offline. learning flow apps/bluerise-assessments-flow-storyboard.html toàn cục · chip có số + bậc khẩn cấp /assessments theo lớp · thống kê + cùng hệ chip ?classid= chi tiết · timeline + file tách nhóm /assessment/[id] cửa phòng thi /exam/[id]/start làm bài · trắc nghiệm + timer bậc 2 /exam/[id]/take nối cặp + kéo thả · timer đỏ /exam/[id]/take xác nhận nộp · cảnh báo câu chưa làm sheet đã nộp /exam/[id]/done đã chấm · moment điểm số /assessment/[id] xem lại bài · chữa nhẹ nhõm /exam/[id]/review bài tập offline · chưa nộp /assessment/[id] chụp bài · quét trang tự bắt viền /submit/camera soát & sắp trang trước khi nộp /submit/review đã nộp muộn · chờ chấm /assessment/[id]","title":"Bài tập & Kiểm tra","description":"14 màn · Hạn nộp, phòng thi, nhiều loại câu hỏi, chữa bài và nộp offline.","icon":"AS","iconBg":"#EAF6FD","iconFg":"#0B72AE","meta":"Learning flow","format":"HTML","screens":[{"id":"assessments-01","label":"01","name":"Toàn cục · chip có số + bậc khẩn cấp","route":"/assessments"},{"id":"assessments-02","label":"02","name":"Theo lớp · thống kê + cùng hệ chip","route":"?classId="},{"id":"assessments-03","label":"03","name":"Chi tiết · timeline + file tách nhóm","route":"/assessment/[id]"},{"id":"assessments-04","label":"04","name":"Cửa phòng thi","route":"/exam/[id]/start"},{"id":"assessments-05","label":"05","name":"Làm bài · trắc nghiệm + timer bậc 2","route":"/exam/[id]/take"},{"id":"assessments-06","label":"06","name":"Nối cặp + kéo thả · timer đỏ","route":"/exam/[id]/take"},{"id":"assessments-07","label":"07","name":"Xác nhận nộp · cảnh báo câu chưa làm","route":"sheet"},{"id":"assessments-08","label":"08","name":"Đã nộp","route":"/exam/[id]/done"},{"id":"assessments-09","label":"09","name":"Đã chấm · moment điểm số","route":"/assessment/[id]"},{"id":"assessments-10","label":"10","name":"Xem lại bài · chữa nhẹ nhõm","route":"/exam/[id]/review"},{"id":"assessments-11","label":"11","name":"Bài tập offline · chưa nộp","route":"/assessment/[id]"},{"id":"assessments-12","label":"12","name":"Chụp bài · quét trang tự bắt viền","route":"/submit/camera"},{"id":"assessments-13","label":"13","name":"Soát & sắp trang trước khi nộp","route":"/submit/review"},{"id":"assessments-14","label":"14","name":"Đã nộp muộn · chờ chấm","route":"/assessment/[id]"}],"id":"apps-bluerise-assessments-flow-storyboard"},{"href":"apps/BlueRise-Classes-Flow-storyboard.html","category":"bluerise","search":"lớp học 6 màn · lịch tuần, tiến độ, hub nội dung, lộ trình và học thử. learning hub bluerise lớp học 6 màn · lịch tuần, tiến độ, hub nội dung, lộ trình và học thử. learning hub apps/bluerise-classes-flow-storyboard.html danh sách lớp · lịch tuần + vòng % /classes hub · 5 lối đi bố cục 2+3 /class/[id] lộ trình · path có connector /learning-path lớp học thử · câu chuyện ghi danh /classes trạng thái rỗng /classes loading skeleton /classes","title":"Lớp học","description":"6 màn · Lịch tuần, tiến độ, hub nội dung, lộ trình và học thử.","icon":"CL","iconBg":"#EAF6FD","iconFg":"#0B72AE","meta":"Learning hub","format":"HTML","screens":[{"id":"classes-01","label":"01","name":"Danh sách lớp · lịch tuần + vòng %","route":"/classes"},{"id":"classes-02","label":"02","name":"Hub · 5 lối đi bố cục 2+3","route":"/class/[id]"},{"id":"classes-03","label":"03","name":"Lộ trình · path có connector","route":"/learning-path"},{"id":"classes-04","label":"04","name":"Lớp học thử · câu chuyện ghi danh","route":"/classes"},{"id":"classes-05","label":"05","name":"Trạng thái rỗng","route":"/classes"},{"id":"classes-06","label":"06","name":"Loading skeleton","route":"/classes"}],"id":"apps-bluerise-classes-flow-storyboard"},{"href":"apps/BlueRise-Timetable-Flow-storyboard.html","category":"bluerise","search":"lịch học 9 màn · tuần, tháng, buổi đang học, tiến độ và chi tiết lịch. schedule bluerise lịch học 9 màn · tuần, tháng, buổi đang học, tiến độ và chi tiết lịch. schedule apps/bluerise-timetable-flow-storyboard.html điểm vào · dải \"lịch học hôm nay\" / (home) rail tuần + chấm buổi + đang học /timetable chọn tháng sheet ngày trống · gợi ý buổi kế tiếp /timetable chi tiết buổi · hero + tổng quan /lesson/[id] chi tiết buổi · tài liệu + bài tập /lesson/[id] loading skeleton /timetable chế độ tháng · lưới 7×5 /timetable đang co tháng → tuần (giữa transition) /timetable","title":"Lịch học","description":"9 màn · Tuần, tháng, buổi đang học, tiến độ và chi tiết lịch.","icon":"TT","iconBg":"#EAF6FD","iconFg":"#0B72AE","meta":"Schedule","format":"HTML","screens":[{"id":"timetable-01","label":"01","name":"Điểm vào · dải \"Lịch học hôm nay\"","route":"/ (home)"},{"id":"timetable-02","label":"02","name":"Rail tuần + chấm buổi + đang học","route":"/timetable"},{"id":"timetable-03","label":"03","name":"Chọn tháng","route":"sheet"},{"id":"timetable-04","label":"04","name":"Ngày trống · gợi ý buổi kế tiếp","route":"/timetable"},{"id":"timetable-05","label":"05","name":"Chi tiết buổi · hero + tổng quan","route":"/lesson/[id]"},{"id":"timetable-06","label":"06","name":"Chi tiết buổi · tài liệu + bài tập","route":"/lesson/[id]"},{"id":"timetable-07","label":"07","name":"Loading skeleton","route":"/timetable"},{"id":"timetable-08","label":"08","name":"Chế độ tháng · lưới 7×5","route":"/timetable"},{"id":"timetable-09","label":"09","name":"Đang co tháng → tuần (giữa transition)","route":"/timetable"}],"id":"apps-bluerise-timetable-flow-storyboard"},{"href":"apps/BlueRise-Account-Flow-storyboard.html","category":"bluerise","search":"tài khoản học sinh 8 màn · hồ sơ, yêu cầu chỉnh sửa, đổi học sinh và camera check-in. profile bluerise tài khoản học sinh 8 màn · hồ sơ, yêu cầu chỉnh sửa, đổi học sinh và camera check-in. profile apps/bluerise-account-flow-storyboard.html hồ sơ · tab học viên /account đang chờ duyệt · banner kể chuyện /account đổi học sinh · đang chọn sheet tạo yêu cầu chỉnh sửa sheet 85% xem yêu cầu đang chờ sheet 60% đổi mật khẩu /account/password ảnh check-in · màn wow /account/face tab phụ huynh + sheet đăng xuất /account","title":"Tài khoản học sinh","description":"8 màn · Hồ sơ, yêu cầu chỉnh sửa, đổi học sinh và camera check-in.","icon":"AC","iconBg":"#EAF6FD","iconFg":"#0B72AE","meta":"Profile","format":"HTML","screens":[{"id":"account-01","label":"01","name":"Hồ sơ · tab học viên","route":"/account"},{"id":"account-02","label":"02","name":"Đang chờ duyệt · banner kể chuyện","route":"/account"},{"id":"account-03","label":"03","name":"Đổi học sinh · đang chọn","route":"sheet"},{"id":"account-04","label":"04","name":"Tạo yêu cầu chỉnh sửa","route":"sheet 85%"},{"id":"account-05","label":"05","name":"Xem yêu cầu đang chờ","route":"sheet 60%"},{"id":"account-06","label":"06","name":"Đổi mật khẩu","route":"/account/password"},{"id":"account-07","label":"07","name":"Ảnh check-in · màn wow","route":"/account/face"},{"id":"account-08","label":"08","name":"Tab phụ huynh + sheet đăng xuất","route":"/account"}],"id":"apps-bluerise-account-flow-storyboard"}]},{"id":"bluesky","eyebrow":"BLUESKY","title":"Ứng dụng và phương án thiết kế","description":"Các bản tương tác cấp ứng dụng và những phương án bố cục dùng để so sánh định hướng.","cards":[{"href":"apps/BlueSky-Dashboard.html","category":"bluesky","search":"dashboard + bảng tin trang chủ, biểu đồ, nhiệm vụ, thông báo, hotline và bảng tin tương tác. interactive app bluesky dashboard + bảng tin trang chủ, biểu đồ, nhiệm vụ, thông báo, hotline và bảng tin tương tác. interactive app apps/bluesky-dashboard.html dashboard + bảng tin interactive app","title":"Dashboard + Bảng tin","description":"Trang chủ, biểu đồ, nhiệm vụ, thông báo, hotline và bảng tin tương tác.","icon":"DB","iconBg":"#EEF0FF","iconFg":"#4B52A5","meta":"Interactive app","format":"HTML","screens":[{"id":"apps-bluesky-dashboard","label":"01","name":"Dashboard + Bảng tin","route":"Interactive app"}],"id":"apps-bluesky-dashboard"},{"href":"apps/BlueSky-Bang-tin-phuong-an.html","category":"bluesky","search":"bảng tin · 3 phương án bento, ngăn xếp vuốt và số báo; có ghi chú đánh đổi từng hướng. concept comparison bluesky bảng tin · 3 phương án bento, ngăn xếp vuốt và số báo; có ghi chú đánh đổi từng hướng. concept comparison apps/bluesky-bang-tin-phuong-an.html bảng tin · 3 phương án concept comparison","title":"Bảng tin · 3 phương án","description":"Bento, ngăn xếp vuốt và số báo; có ghi chú đánh đổi từng hướng.","icon":"B3","iconBg":"#EEF0FF","iconFg":"#4B52A5","meta":"Concept comparison","format":"HTML","screens":[{"id":"apps-bluesky-bang-tin-phuong-an","label":"01","name":"Bảng tin · 3 phương án","route":"Concept comparison"}],"id":"apps-bluesky-bang-tin-phuong-an"},{"href":"apps/BlueSky-Bang-tin-Editorial.html","category":"bluesky","search":"bảng tin · editorial phương án nhấn mạnh typography và nhịp biên tập nội dung. editorial direction bluesky bảng tin · editorial phương án nhấn mạnh typography và nhịp biên tập nội dung. editorial direction apps/bluesky-bang-tin-editorial.html bảng tin · editorial editorial direction","title":"Bảng tin · Editorial","description":"Phương án nhấn mạnh typography và nhịp biên tập nội dung.","icon":"ED","iconBg":"#EEF0FF","iconFg":"#4B52A5","meta":"Editorial direction","format":"HTML","screens":[{"id":"apps-bluesky-bang-tin-editorial","label":"01","name":"Bảng tin · Editorial","route":"Editorial direction"}],"id":"apps-bluesky-bang-tin-editorial"}]},{"id":"absence","eyebrow":"MÀN ĐƠN LẺ · 430 × 932","title":"Xin nghỉ phép","description":"Mỗi trạng thái được tách thành một file HTML độc lập để xem, trình bày hoặc kiểm thử riêng.","cards":[{"href":"absence/01-absence-list.html","category":"absence","search":"01 · danh sách đơn danh sách gần đây và chip lọc trạng thái. /absence absence 01 · danh sách đơn danh sách gần đây và chip lọc trạng thái. /absence absence/01-absence-list.html danh sách đơn /absence","title":"01 · Danh sách đơn","description":"Danh sách gần đây và chip lọc trạng thái.","icon":"01","iconBg":"#FFF8E8","iconFg":"#9A6500","meta":"/absence","format":"HTML","screens":[{"id":"absence-01","label":"01","name":"Danh sách đơn","route":"/absence"}],"id":"absence-01-absence-list"},{"href":"absence/02-absence-empty.html","category":"absence","search":"02 · trạng thái trống empty state và cta tạo đơn đầu tiên. empty state absence 02 · trạng thái trống empty state và cta tạo đơn đầu tiên. empty state absence/02-absence-empty.html trạng thái trống empty state","title":"02 · Trạng thái trống","description":"Empty state và CTA tạo đơn đầu tiên.","icon":"02","iconBg":"#FFF8E8","iconFg":"#9A6500","meta":"Empty state","format":"HTML","screens":[{"id":"absence-02","label":"02","name":"Trạng thái trống","route":"Empty state"}],"id":"absence-02-absence-empty"},{"href":"absence/03-absence-create-top.html","category":"absence","search":"03 · tạo đơn · phần trên chọn ngày nghỉ và các buổi học. /absence/create absence 03 · tạo đơn · phần trên chọn ngày nghỉ và các buổi học. /absence/create absence/03-absence-create-top.html tạo đơn · phần trên /absence/create","title":"03 · Tạo đơn · Phần trên","description":"Chọn ngày nghỉ và các buổi học.","icon":"03","iconBg":"#FFF8E8","iconFg":"#9A6500","meta":"/absence/create","format":"HTML","screens":[{"id":"absence-03","label":"03","name":"Tạo đơn · Phần trên","route":"/absence/create"}],"id":"absence-03-absence-create-top"},{"href":"absence/04-absence-create-bottom.html","category":"absence","search":"04 · tạo đơn · phần dưới lý do, file đính kèm và hành động gửi. form completion absence 04 · tạo đơn · phần dưới lý do, file đính kèm và hành động gửi. form completion absence/04-absence-create-bottom.html tạo đơn · phần dưới form completion","title":"04 · Tạo đơn · Phần dưới","description":"Lý do, file đính kèm và hành động gửi.","icon":"04","iconBg":"#FFF8E8","iconFg":"#9A6500","meta":"Form completion","format":"HTML","screens":[{"id":"absence-04","label":"04","name":"Tạo đơn · Phần dưới","route":"Form completion"}],"id":"absence-04-absence-create-bottom"},{"href":"absence/05-absence-detail.html","category":"absence","search":"05 · chi tiết đơn timeline xử lý, buổi học và file liên quan. /absence/[id] absence 05 · chi tiết đơn timeline xử lý, buổi học và file liên quan. /absence/[id] absence/05-absence-detail.html chi tiết đơn /absence/[id]","title":"05 · Chi tiết đơn","description":"Timeline xử lý, buổi học và file liên quan.","icon":"05","iconBg":"#FFF8E8","iconFg":"#9A6500","meta":"/absence/[id]","format":"HTML","screens":[{"id":"absence-05","label":"05","name":"Chi tiết đơn","route":"/absence/[id]"}],"id":"absence-05-absence-detail"},{"href":"absence/06-absence-cancel-confirm.html","category":"absence","search":"06 · xác nhận huỷ bottom sheet xác nhận hành động huỷ. confirmation absence 06 · xác nhận huỷ bottom sheet xác nhận hành động huỷ. confirmation absence/06-absence-cancel-confirm.html xác nhận huỷ confirmation","title":"06 · Xác nhận huỷ","description":"Bottom sheet xác nhận hành động huỷ.","icon":"06","iconBg":"#FFF8E8","iconFg":"#9A6500","meta":"Confirmation","format":"HTML","screens":[{"id":"absence-06","label":"06","name":"Xác nhận huỷ","route":"Confirmation"}],"id":"absence-06-absence-cancel-confirm"},{"href":"absence/07-absence-edit.html","category":"absence","search":"07 · sửa đơn chỉnh buổi học, lý do, file; khoảng ngày bị khoá. /absence/[id]/edit absence 07 · sửa đơn chỉnh buổi học, lý do, file; khoảng ngày bị khoá. /absence/[id]/edit absence/07-absence-edit.html sửa đơn /absence/[id]/edit","title":"07 · Sửa đơn","description":"Chỉnh buổi học, lý do, file; khoảng ngày bị khoá.","icon":"07","iconBg":"#FFF8E8","iconFg":"#9A6500","meta":"/absence/[id]/edit","format":"HTML","screens":[{"id":"absence-07","label":"07","name":"Sửa đơn","route":"/absence/[id]/edit"}],"id":"absence-07-absence-edit"}]},{"id":"login","eyebrow":"MÀN ĐƠN LẺ · 430 × 932","title":"Đăng nhập","description":"Chuỗi màn xác thực tách riêng, phù hợp cho review chi tiết trạng thái và chuyển bước.","cards":[{"href":"login/01-login.html","category":"login","search":"01 · số điện thoại nhập số điện thoại và bắt đầu xác thực. /login login 01 · số điện thoại nhập số điện thoại và bắt đầu xác thực. /login login/01-login.html số điện thoại /login","title":"01 · Số điện thoại","description":"Nhập số điện thoại và bắt đầu xác thực.","icon":"01","iconBg":"#EAF8F3","iconFg":"#0B7A62","meta":"/login","format":"HTML","screens":[{"id":"login-01","label":"01","name":"Số điện thoại","route":"/login"}],"id":"login-01-login"},{"href":"login/02-login-password.html","category":"login","search":"02 · mật khẩu nhập mật khẩu, bao gồm trạng thái lỗi. /login-password login 02 · mật khẩu nhập mật khẩu, bao gồm trạng thái lỗi. /login-password login/02-login-password.html mật khẩu /login-password","title":"02 · Mật khẩu","description":"Nhập mật khẩu, bao gồm trạng thái lỗi.","icon":"02","iconBg":"#EAF8F3","iconFg":"#0B7A62","meta":"/login-password","format":"HTML","screens":[{"id":"login-02","label":"02","name":"Mật khẩu","route":"/login-password"}],"id":"login-02-login-password"},{"href":"login/03-login-otp-channel.html","category":"login","search":"03 · chọn kênh otp chọn phương thức nhận mã và trạng thái đang gửi. /login-otp-channel login 03 · chọn kênh otp chọn phương thức nhận mã và trạng thái đang gửi. /login-otp-channel login/03-login-otp-channel.html chọn kênh otp /login-otp-channel","title":"03 · Chọn kênh OTP","description":"Chọn phương thức nhận mã và trạng thái đang gửi.","icon":"03","iconBg":"#EAF8F3","iconFg":"#0B7A62","meta":"/login-otp-channel","format":"HTML","screens":[{"id":"login-03","label":"03","name":"Chọn kênh OTP","route":"/login-otp-channel"}],"id":"login-03-login-otp-channel"},{"href":"login/04-login-otp-verify.html","category":"login","search":"04 · xác thực otp nhập mã, đếm ngược và gửi lại. /login-otp-verify login 04 · xác thực otp nhập mã, đếm ngược và gửi lại. /login-otp-verify login/04-login-otp-verify.html xác thực otp /login-otp-verify","title":"04 · Xác thực OTP","description":"Nhập mã, đếm ngược và gửi lại.","icon":"04","iconBg":"#EAF8F3","iconFg":"#0B7A62","meta":"/login-otp-verify","format":"HTML","screens":[{"id":"login-04","label":"04","name":"Xác thực OTP","route":"/login-otp-verify"}],"id":"login-04-login-otp-verify"},{"href":"login/05-login-set-password.html","category":"login","search":"05 · tạo mật khẩu thiết lập mật khẩu cho tài khoản. /login-set-password login 05 · tạo mật khẩu thiết lập mật khẩu cho tài khoản. /login-set-password login/05-login-set-password.html tạo mật khẩu /login-set-password","title":"05 · Tạo mật khẩu","description":"Thiết lập mật khẩu cho tài khoản.","icon":"05","iconBg":"#EAF8F3","iconFg":"#0B7A62","meta":"/login-set-password","format":"HTML","screens":[{"id":"login-05","label":"05","name":"Tạo mật khẩu","route":"/login-set-password"}],"id":"login-05-login-set-password"},{"href":"login/06-login-select-student.html","category":"login","search":"06 · chọn học sinh chọn hồ sơ khi tài khoản có nhiều học sinh. /login-select-student login 06 · chọn học sinh chọn hồ sơ khi tài khoản có nhiều học sinh. /login-select-student login/06-login-select-student.html chọn học sinh /login-select-student","title":"06 · Chọn học sinh","description":"Chọn hồ sơ khi tài khoản có nhiều học sinh.","icon":"06","iconBg":"#EAF8F3","iconFg":"#0B7A62","meta":"/login-select-student","format":"HTML","screens":[{"id":"login-06","label":"06","name":"Chọn học sinh","route":"/login-select-student"}],"id":"login-06-login-select-student"}]},{"id":"screens","eyebrow":"VISUAL EXPLORATION · 300 × 640","title":"Màn nền và UI","description":"Các thử nghiệm nền, ánh sáng, chuyển sắc và bố cục cơ bản của ngôn ngữ thị giác BlueRise.","cards":[{"href":"screens/1a-splash.html","category":"screens","search":"splash logo, tên ứng dụng và tagline trên nền trời chuyển sắc. visual foundation screens splash logo, tên ứng dụng và tagline trên nền trời chuyển sắc. visual foundation screens/1a-splash.html splash visual foundation","title":"Splash","description":"Logo, tên ứng dụng và tagline trên nền trời chuyển sắc.","icon":"SP","iconBg":"#F5EEFF","iconFg":"#6C48A8","meta":"Visual foundation","format":"HTML","screens":[{"id":"screens-1a-splash","label":"01","name":"Splash","route":"Visual foundation"}],"id":"screens-1a-splash"},{"href":"screens/1b-home.html","category":"screens","search":"home header dạng sóng và card nội dung chính. visual foundation screens home header dạng sóng và card nội dung chính. visual foundation screens/1b-home.html home visual foundation","title":"Home","description":"Header dạng sóng và card nội dung chính.","icon":"HM","iconBg":"#F5EEFF","iconFg":"#6C48A8","meta":"Visual foundation","format":"HTML","screens":[{"id":"screens-1b-home","label":"01","name":"Home","route":"Visual foundation"}],"id":"screens-1b-home"},{"href":"screens/1d-onboarding.html","category":"screens","search":"onboarding minh hoạ khinh khí cầu, nội dung giới thiệu và cta. visual foundation screens onboarding minh hoạ khinh khí cầu, nội dung giới thiệu và cta. visual foundation screens/1d-onboarding.html onboarding visual foundation","title":"Onboarding","description":"Minh hoạ khinh khí cầu, nội dung giới thiệu và CTA.","icon":"ON","iconBg":"#F5EEFF","iconFg":"#6C48A8","meta":"Visual foundation","format":"HTML","screens":[{"id":"screens-1d-onboarding","label":"01","name":"Onboarding","route":"Visual foundation"}],"id":"screens-1d-onboarding"},{"href":"screens/1e-dark.html","category":"screens","search":"dark mode nền trời đêm và hệ card tối. theme study screens dark mode nền trời đêm và hệ card tối. theme study screens/1e-dark.html dark mode theme study","title":"Dark mode","description":"Nền trời đêm và hệ card tối.","icon":"DK","iconBg":"#F5EEFF","iconFg":"#6C48A8","meta":"Theme study","format":"HTML","screens":[{"id":"screens-1e-dark","label":"01","name":"Dark mode","route":"Theme study"}],"id":"screens-1e-dark"},{"href":"screens/1f-login.html","category":"screens","search":"login visual blob mềm, hai trường nhập và nút hành động. form study screens login visual blob mềm, hai trường nhập và nút hành động. form study screens/1f-login.html login visual form study","title":"Login visual","description":"Blob mềm, hai trường nhập và nút hành động.","icon":"LV","iconBg":"#F5EEFF","iconFg":"#6C48A8","meta":"Form study","format":"HTML","screens":[{"id":"screens-1f-login","label":"01","name":"Login visual","route":"Form study"}],"id":"screens-1f-login"}]}]}</script>
 <script>
 (() => {
-  const input = document.getElementById('searchInput');
-  const filters = [...document.querySelectorAll('.filter')];
-  const cards = [...document.querySelectorAll('.project-card')];
-  const sections = [...document.querySelectorAll('.library-section')];
-  const empty = document.getElementById('emptyState');
-  let active = 'all';
-  const apply = () => {
-    const q = input.value.trim().toLowerCase();
-    let visible = 0;
-    cards.forEach(card => {
-      const categoryOK = active === 'all' || card.dataset.category === active;
-      const queryOK = !q || card.dataset.search.includes(q);
-      const show = categoryOK && queryOK;
-      card.classList.toggle('hidden', !show);
-      if (show) visible++;
-    });
-    sections.forEach(section => {
-      const count = section.querySelectorAll('.project-card:not(.hidden)').length;
-      section.classList.toggle('hidden', count === 0);
-      const badge = section.querySelector('.section-count');
-      if (badge) badge.textContent = count + ' mục';
-    });
-    empty.style.display = visible ? 'none' : 'block';
-  };
-  input.addEventListener('input', apply);
-  filters.forEach(btn => btn.addEventListener('click', () => {
-    active = btn.dataset.filter;
-    filters.forEach(x => x.classList.toggle('active', x === btn));
-    apply();
-  }));
-  document.addEventListener('keydown', e => {
-    if (e.key === '/' && document.activeElement !== input) { e.preventDefault(); input.focus(); }
-    if (e.key === 'Escape' && document.activeElement === input) { input.value=''; input.blur(); apply(); }
-  });
+'use strict';
+const DATA=JSON.parse(document.getElementById('libraryData').textContent);
+const STORAGE_KEY='bluerise-implementation-checklist-v2';
+const LEGACY_KEY='bluerise-implementation-checklist-v1';
+const VALID=new Set(['todo','in-progress','done']);
+const labels={todo:'Chưa làm','in-progress':'Đang triển khai',done:'Hoàn thành'};
+let state=loadState();let category='all';let statusFilter='all';let hideDone=false;const openProjects=new Set();
+const $=s=>document.querySelector(s);const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function loadState(){let raw=localStorage.getItem(STORAGE_KEY);if(!raw){raw=localStorage.getItem(LEGACY_KEY)}if(!raw)return{};try{const parsed=JSON.parse(raw);const source=parsed.state&&typeof parsed.state==='object'?parsed.state:parsed;const out={};for(const [id,v] of Object.entries(source)){if(v&&typeof v==='object'){out[id]={status:VALID.has(v.status)?v.status:'todo',note:String(v.note||''),updatedAt:v.updatedAt||''}}}return out}catch{return{}}}
+function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}
+function record(id){return state[id]||{status:'todo',note:'',updatedAt:''}}
+function setRecord(id,patch){const prev=record(id);state[id]={...prev,...patch,updatedAt:new Date().toISOString()};save()}
+function uniqueScreens(){const map=new Map();DATA.sections.forEach(s=>s.cards.forEach(c=>c.screens.forEach(x=>{if(!map.has(x.id))map.set(x.id,x)})));return[...map.values()]}
+function projectStats(card){const screens=[...new Map(card.screens.map(s=>[s.id,s])).values()];let done=0,doing=0;screens.forEach(s=>{const st=record(s.id).status;if(st==='done')done++;else if(st==='in-progress')doing++});const total=screens.length;const pct=total?Math.round(done/total*100):0;const aggregate=done===total&&total?'done':(done||doing)?'in-progress':'todo';return{done,doing,total,pct,aggregate}}
+function overall(){const screens=uniqueScreens();let done=0,doing=0;let latest='';screens.forEach(s=>{const r=record(s.id);if(r.status==='done')done++;else if(r.status==='in-progress')doing++;if(r.updatedAt&&r.updatedAt>latest)latest=r.updatedAt});return{total:screens.length,done,doing,todo:screens.length-done-doing,pct:screens.length?Math.round(done/screens.length*100):0,latest}}
+function fmtDate(iso){if(!iso)return'Chưa có thay đổi';try{return'Cập nhật '+new Intl.DateTimeFormat('vi-VN',{dateStyle:'short',timeStyle:'short'}).format(new Date(iso))}catch{return'Đã cập nhật'}}
+function toast(msg,type=''){const el=$('#toast');el.textContent=msg;el.className='toast show '+type;clearTimeout(toast.t);toast.t=setTimeout(()=>el.className='toast',2600)}
+function renderStats(){const o=overall();$('#overallPercent').textContent=o.pct+'%';$('#progressRing').style.setProperty('--pct',o.pct);$('#totalScreens').textContent=o.total;$('#todoCount').textContent=o.todo;$('#doingCount').textContent=o.doing;$('#doneCount').textContent=o.done;$('#summaryText').textContent=`${o.done} / ${o.total} màn đã xong`;$('#summaryDetail').textContent=`${o.doing} đang triển khai · ${o.todo} chưa làm`;$('#summaryBar').style.width=o.pct+'%';$('#lastUpdated').textContent=fmtDate(o.latest)}
+function cardMatches(card,q){const ps=projectStats(card);const categoryOK=category==='all'||card.category===category;const statusOK=statusFilter==='all'||ps.aggregate===statusFilter;const queryOK=!q||card.search.includes(q);return categoryOK&&statusOK&&queryOK}
+function screenRow(s){const r=record(s.id);const done=r.status==='done';const hidden=hideDone&&done?' hide-done':'';return `<div class="screen-row ${done?'is-done':''}${hidden}" data-screen-row="${esc(s.id)}"><div class="screen-main"><input class="screen-check" type="checkbox" data-screen="${esc(s.id)}" ${done?'checked':''} aria-label="Đánh dấu hoàn thành"><div class="screen-copy"><div class="screen-title">${esc(s.label)} · ${esc(s.name)}</div><div class="screen-route">${esc(s.route||'')}</div></div><select class="status-select ${esc(r.status)}" data-screen="${esc(s.id)}" aria-label="Trạng thái"><option value="todo" ${r.status==='todo'?'selected':''}>Chưa làm</option><option value="in-progress" ${r.status==='in-progress'?'selected':''}>Đang triển khai</option><option value="done" ${r.status==='done'?'selected':''}>Hoàn thành</option></select></div><div class="note-wrap"><textarea class="note-input" data-screen="${esc(s.id)}" placeholder="Ghi chú: UI/API/blocker/PR…">${esc(r.note)}</textarea></div></div>`}
+function cardHTML(card){const p=projectStats(card);const open=openProjects.has(card.id)?' open':'';return `<article class="project-card" id="${esc(card.id)}" data-project="${esc(card.id)}"><span class="project-state ${p.aggregate}" title="${labels[p.aggregate]}"></span><div class="project-main"><div class="card-top"><span class="card-icon" style="--icon-bg:${esc(card.iconBg)};--icon-fg:${esc(card.iconFg)}">${esc(card.icon)}</span><a class="open-link" href="${esc(card.href)}" target="_blank" rel="noopener">Mở prototype ↗</a></div><h3>${esc(card.title)}</h3><p class="description">${esc(card.description)}</p><div class="card-meta"><span>${esc(card.meta)}</span><span>${esc(card.format)}</span></div><div class="project-progress"><div class="progress-line"><span>${p.done}/${p.total} màn hoàn thành</span><strong>${p.pct}%</strong></div><div class="progress-track"><i style="width:${p.pct}%"></i></div></div></div><details class="checklist" data-details="${esc(card.id)}"${open}><summary><span>Checklist ${p.total} màn</span><span>${p.doing?`${p.doing} đang làm`:labels[p.aggregate]}</span></summary><div class="checklist-body"><div class="project-actions"><button class="mini-btn" data-action="all-done" data-project="${esc(card.id)}">Đánh dấu tất cả xong</button><button class="mini-btn" data-action="project-reset" data-project="${esc(card.id)}">Đặt lại mục này</button></div>${card.screens.map(screenRow).join('')}</div></details></article>`}
+function renderLibrary(){const q=$('#searchInput').value.trim().toLowerCase();let visible=0;const chunks=[];DATA.sections.forEach(sec=>{const cards=sec.cards.filter(c=>cardMatches(c,q));if(!cards.length)return;visible+=cards.length;chunks.push(`<section class="library-section" id="${esc(sec.id)}"><div class="section-head"><div><div class="eyebrow">${esc(sec.eyebrow)}</div><h2>${esc(sec.title)}</h2><p>${esc(sec.description)}</p></div><span class="section-count">${cards.length} mục</span></div><div class="project-grid">${cards.map(cardHTML).join('')}</div></section>`)});$('#libraryRoot').innerHTML=chunks.join('');$('#emptyState').style.display=visible?'none':'block';renderStats()}
+function findCard(id){for(const sec of DATA.sections){const c=sec.cards.find(x=>x.id===id);if(c)return c}return null}
+function setProject(card,status){[...new Set(card.screens.map(s=>s.id))].forEach(id=>setRecord(id,{status}));renderLibrary()}
+function exportData(){const payload={schema:'bluerise-checklist',version:2,exportedAt:new Date().toISOString(),state};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='bluerise-checklist-'+new Date().toISOString().slice(0,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),500);toast('Đã xuất checklist JSON','success')}
+async function importData(file){try{const payload=JSON.parse(await file.text());const source=payload.state&&typeof payload.state==='object'?payload.state:payload;if(!source||typeof source!=='object'||Array.isArray(source))throw new Error('Tệp không đúng định dạng');const next={};for(const [id,v] of Object.entries(source)){if(v&&typeof v==='object')next[id]={status:VALID.has(v.status)?v.status:'todo',note:String(v.note||''),updatedAt:v.updatedAt||new Date().toISOString()}}state=next;save();renderLibrary();toast('Đã nhập dữ liệu checklist','success')}catch(e){toast('Không thể nhập: '+e.message,'error')}}
+$('#searchInput').addEventListener('input',renderLibrary);
+$('#categoryFilters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(!b)return;category=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x===b));renderLibrary()});
+$('#statusFilters').addEventListener('click',e=>{const b=e.target.closest('[data-status]');if(!b)return;statusFilter=b.dataset.status;document.querySelectorAll('[data-status]').forEach(x=>x.classList.toggle('active',x===b));renderLibrary()});
+$('#hideDone').addEventListener('change',e=>{hideDone=e.target.checked;renderLibrary()});
+$('#libraryRoot').addEventListener('toggle',e=>{const d=e.target.closest('details[data-details]');if(!d)return;d.open?openProjects.add(d.dataset.details):openProjects.delete(d.dataset.details)},true);
+$('#libraryRoot').addEventListener('change',e=>{const id=e.target.dataset.screen;if(!id)return;if(e.target.classList.contains('screen-check')){setRecord(id,{status:e.target.checked?'done':'todo'});renderLibrary()}else if(e.target.classList.contains('status-select')){setRecord(id,{status:e.target.value});renderLibrary()}});
+let noteTimer;$('#libraryRoot').addEventListener('input',e=>{if(!e.target.classList.contains('note-input'))return;const id=e.target.dataset.screen;setRecord(id,{note:e.target.value});clearTimeout(noteTimer);noteTimer=setTimeout(()=>{renderStats()},150)});
+$('#libraryRoot').addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(!b)return;const card=findCard(b.dataset.project);if(!card)return;if(b.dataset.action==='all-done')setProject(card,'done');if(b.dataset.action==='project-reset'&&confirm(`Đặt lại checklist của “${card.title}”?`))setProject(card,'todo')});
+$('#exportBtn').addEventListener('click',exportData);$('#importBtn').addEventListener('click',()=>$('#importFile').click());$('#importFile').addEventListener('change',e=>{const f=e.target.files[0];if(f)importData(f);e.target.value=''});$('#resetBtn').addEventListener('click',()=>{if(confirm('Xoá toàn bộ trạng thái và ghi chú checklist trên trình duyệt này?')){state={};save();renderLibrary();toast('Đã đặt lại toàn bộ checklist')}});
+document.addEventListener('keydown',e=>{if(e.key==='/'&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)){e.preventDefault();$('#searchInput').focus()}if(e.key==='Escape'&&document.activeElement===$('#searchInput')){$('#searchInput').value='';$('#searchInput').blur();renderLibrary()}});
+renderLibrary();
 })();
 </script>
-</body>
-</html>
+</body></html>

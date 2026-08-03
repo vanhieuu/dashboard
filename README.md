@@ -21,3 +21,16 @@ Trang vào chính: `index.html`.
 
 - `index.html` đã được thiết kế lại thành thư viện responsive có tìm kiếm và bộ lọc.
 - Luồng Góp ý chỉ còn một tệp chuẩn: `apps/BlueRise-Feedback-Flow-storyboard.html`.
+
+## Implementation checklist
+
+Trang `index.html` hiện có checklist triển khai cho **119 màn/hạng mục duy nhất**.
+
+- Checkbox: đánh dấu màn đã hoàn thành.
+- Trạng thái: Chưa làm / Đang triển khai / Hoàn thành.
+- Ghi chú: lưu UI, API, blocker, pull request hoặc công việc còn lại.
+- Dữ liệu lưu trong `localStorage` của trình duyệt.
+- Nút **Xuất JSON** và **Nhập JSON** dùng để sao lưu hoặc chia sẻ tiến độ giữa các máy.
+- Màn đơn Xin nghỉ và Đăng nhập dùng chung ID với storyboard tổng nên không bị tính trùng.
+
+Sau khi thay bộ file trên GitHub Pages, checklist cũ trên cùng domain vẫn được giữ nếu trình duyệt chưa xoá dữ liệu website.
