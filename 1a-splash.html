@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>BlueSky - Onboarding</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Be+Vietnam+Pro:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:#ffffff;font-family:'Be Vietnam Pro',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow:hidden}
+  a{color:#0B72AE}a:hover{color:#063E62}
+  #stage{position:fixed;top:50%;left:50%;width:430px;height:932px;transform-origin:50% 50%;transform:translate(-50%,-50%) scale(var(--s,1));background:#ffffff;overflow:hidden}
+  .ui{position:absolute;inset:0;display:flex;flex-direction:column;padding:52px 32px 32px}
+</style>
+</head>
+<body>
+<div id="stage">
+<svg viewBox="0 0 300 640" width="430" height="932" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;display:block">
+<defs><linearGradient id="d-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8FD6F2"/><stop offset="1" stop-color="#D9F0FB"/></linearGradient><linearGradient id="d-bal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1B9BD8"/><stop offset="1" stop-color="#0B72AE"/></linearGradient></defs>
+<path d="M0,0 L300,0 L300,392 C220,430 96,352 0,404 Z" fill="url(#d-bg)"/>
+<circle cx="56" cy="76" r="34" fill="#FFD166" opacity="0.9"/>
+<g fill="#fff" opacity="0.75"><ellipse cx="212" cy="92" rx="34" ry="21"/><ellipse cx="182" cy="100" rx="22" ry="15"/><ellipse cx="240" cy="101" rx="20" ry="14"/><rect x="176" y="96" width="86" height="16" rx="8"/></g>
+<g fill="#fff" opacity="0.55"><ellipse cx="72" cy="210" rx="28" ry="17"/><ellipse cx="50" cy="217" rx="18" ry="12"/><ellipse cx="94" cy="217" rx="16" ry="11"/><rect x="44" y="213" width="66" height="13" rx="6.5"/></g>
+<g><path d="M150 236 l-6 22 h12 Z" fill="#F0B429"/><rect x="141" y="256" width="18" height="14" rx="4" fill="#FFB74D"/><path d="M150 130 c26 0 46 21 46 47 c0 26 -26 44 -46 59 c-20 -15 -46 -33 -46 -59 c0 -26 20 -47 46 -47 Z" fill="url(#d-bal)"/><path d="M150 130 c9 0 16 21 16 47 c0 20 -7 40 -16 59 c-9 -19 -16 -39 -16 -59 c0 -26 7 -47 16 -47 Z" fill="#FFD166" opacity="0.9"/><circle cx="150" cy="176" r="0" fill="none"/></g>
+<g fill="#fff"><ellipse cx="150" cy="404" rx="96" ry="34"/><ellipse cx="72" cy="414" rx="48" ry="24"/><ellipse cx="232" cy="414" rx="44" ry="22"/><rect x="24" y="402" width="252" height="30" rx="15"/></g>
+<rect y="424" width="300" height="216" fill="#fff"/>
+<circle cx="264" cy="176" r="6" fill="#fff" opacity="0.8"/><circle cx="34" cy="300" r="5" fill="#fff" opacity="0.8"/><circle cx="272" cy="300" r="8" fill="#fff" opacity="0.6"/>
+</svg>
+<div class="ui" style="justify-content:flex-end;padding-bottom:48px;gap:16px">
+<div style="font:800 44px/50px 'Baloo 2',sans-serif;color:#0B3B58;line-height:50px">Bay cao cùng<br/>BlueSky</div>
+<div style="font:500 21px/28px 'Be Vietnam Pro',sans-serif;color:#5A7488">Một dòng mô tả ngắn cho bước onboarding này.</div>
+<div style="display:flex;gap:8px;margin-top:4px"><span style="width:28.5px;height:8.5px;border-radius:4px;background:#0B72AE"></span><span style="width:8.5px;height:8.5px;border-radius:4px;background:#CFE3EE"></span><span style="width:8.5px;height:8.5px;border-radius:4px;background:#CFE3EE"></span></div>
+<div style="margin-top:16px;height:66px;border-radius:32px;background:#0B72AE;display:flex;align-items:center;justify-content:center;font:700 21px/28px 'Be Vietnam Pro',sans-serif;color:#fff">Tiếp tục</div>
+</div></div>
+<script>
+(function(){var st=document.getElementById("stage");function fit(){st.style.setProperty("--s",Math.min(innerWidth/430,innerHeight/932));}fit();addEventListener("resize",fit);addEventListener("orientationchange",fit);})();
+</script>
+</body>
+</html>

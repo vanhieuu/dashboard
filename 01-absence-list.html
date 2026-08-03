@@ -1,0 +1,38 @@
+# Supabase Setup Record
+
+## Project
+
+- Name: `BlueriseBoard`
+- Ref: `tveokwpxocymnrwqxdcr`
+- API URL: `https://tveokwpxocymnrwqxdcr.supabase.co`
+
+## Database object
+
+Table: `public.bluerise_checklist_items`
+
+Primary key:
+
+```text
+(user_id, project_key, screen_id)
+```
+
+Columns:
+
+```text
+user_id uuid
+project_key text
+screen_id text
+status text: todo | in-progress | done
+note text
+updated_at timestamptz
+```
+
+## Security
+
+- RLS enabled.
+- `anon` has no table privileges.
+- `authenticated` has SELECT/INSERT/UPDATE/DELETE.
+- Four RLS policies require `auth.uid() = user_id`.
+- The table is included in `supabase_realtime`.
+
+Never place a service-role or secret key in GitHub Pages. The publishable key embedded in `index.html` is intended for browser use and relies on RLS for data authorization.

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>BlueSky - Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Be+Vietnam+Pro:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:#FBFDFF;font-family:'Be Vietnam Pro',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow:hidden}
+  a{color:#0B72AE}a:hover{color:#063E62}
+  #stage{position:fixed;top:50%;left:50%;width:430px;height:932px;transform-origin:50% 50%;transform:translate(-50%,-50%) scale(var(--s,1));background:#FBFDFF;overflow:hidden}
+  .ui{position:absolute;inset:0;display:flex;flex-direction:column;padding:52px 32px 32px}
+</style>
+</head>
+<body>
+<div id="stage">
+<svg viewBox="0 0 300 640" width="430" height="932" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;display:block">
+<defs><linearGradient id="f-1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0B72AE" stop-opacity="0.9"/><stop offset="1" stop-color="#6FC6EE" stop-opacity="0.9"/></linearGradient><linearGradient id="f-2" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#D6EEF9"/><stop offset="1" stop-color="#EAF6FD"/></linearGradient></defs>
+<rect width="300" height="640" fill="#FBFDFF"/>
+<path d="M-40,-30 C60,-60 180,20 200,90 C220,164 120,190 40,168 C-40,146 -90,10 -40,-30 Z" fill="url(#f-1)"/>
+<path d="M300,60 C260,110 274,180 300,214 L300,60 Z" fill="#6FC6EE" opacity="0.35"/>
+<path d="M330,470 C290,420 190,436 154,486 C118,536 168,606 236,616 C310,626 372,520 330,470 Z" fill="url(#f-2)"/>
+<circle cx="52" cy="360" r="30" fill="#D6EEF9" opacity="0.8"/><circle cx="252" cy="300" r="12" fill="#FFD166" opacity="0.75"/><circle cx="96" cy="560" r="8" fill="#6FC6EE" opacity="0.6"/><circle cx="30" cy="470" r="5" fill="#0B72AE" opacity="0.3"/>
+<g fill="#fff" opacity="0.85"><ellipse cx="120" cy="96" rx="30" ry="18"/><ellipse cx="94" cy="104" rx="20" ry="13"/><ellipse cx="146" cy="104" rx="18" ry="12"/><rect x="88" y="100" width="76" height="14" rx="7"/></g>
+</svg>
+<div class="ui" style="justify-content:center;gap:16px">
+<div style="font:800 44px/50px 'Baloo 2',sans-serif;color:#0B3B58">Đăng nhập</div>
+<div style="height:69px;border-radius:24px;background:#fff;border:1px solid #DCEBF4;box-shadow:0 5.5px 20px rgba(11,114,174,.07)"></div>
+<div style="height:69px;border-radius:24px;background:#fff;border:1px solid #DCEBF4;box-shadow:0 5.5px 20px rgba(11,114,174,.07)"></div>
+<div style="height:69px;border-radius:24px;background:#0B72AE;display:flex;align-items:center;justify-content:center;font:700 21px/28px 'Be Vietnam Pro',sans-serif;color:#fff">Tiếp tục</div>
+</div></div>
+<script>
+(function(){var st=document.getElementById("stage");function fit(){st.style.setProperty("--s",Math.min(innerWidth/430,innerHeight/932));}fit();addEventListener("resize",fit);addEventListener("orientationchange",fit);})();
+</script>
+</body>
+</html>
