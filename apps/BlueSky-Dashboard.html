@@ -1,26 +1,2 @@
 <!DOCTYPE html>
-<html lang="vi">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate">
-<title>BlueSky Dashboard v6b</title>
-<style>
-html,body{margin:0;min-height:100%;background:#16232B;font-family:system-ui,sans-serif}.loading{position:fixed;inset:0;display:grid;place-items:center;color:#fff}.error{margin:20px;padding:16px;border-radius:12px;background:#fff1ef;color:#9d392f;font:14px/1.5 system-ui,sans-serif;white-space:pre-wrap}
-</style>
-</head>
-<body><div class="loading">Đang mở BlueSky Dashboard…</div>
-<script>
-(async()=>{try{
-const base='../assets/bluesky-dashboard-v6b/';
-const names=['part-01.hex','part-02.hex','part-03.hex','part-04.hex','part-05.hex','part-06.hex','part-07.hex','part-08.hex','part-09.hex','part-10-13.hex','part-14-17.hex','part-18.hex','part-19.hex','part-20.hex'];
-const texts=await Promise.all(names.map(async n=>{const r=await fetch(base+n+'?v=20260813-6b',{cache:'no-store'});if(!r.ok)throw new Error(n+': HTTP '+r.status);return(await r.text()).trim()}));
-const hex=texts.join('');if(hex.length%2)throw new Error('Dữ liệu dashboard không hợp lệ');
-const bytes=new Uint8Array(hex.length/2);for(let i=0;i<bytes.length;i++){const v=parseInt(hex.slice(i*2,i*2+2),16);if(Number.isNaN(v))throw new Error('Dữ liệu dashboard bị hỏng');bytes[i]=v}
-if(typeof DecompressionStream==='undefined')throw new Error('Trình duyệt không hỗ trợ giải nén gzip');
-const ds=new DecompressionStream('gzip');const writer=ds.writable.getWriter();await writer.write(bytes);await writer.close();
-const reader=ds.readable.getReader(),chunks=[];let total=0;for(;;){const {value,done}=await reader.read();if(done)break;chunks.push(value);total+=value.length}
-const out=new Uint8Array(total);let off=0;for(const c of chunks){out.set(c,off);off+=c.length}
-const html=new TextDecoder().decode(out);if(!html.startsWith('<!DOCTYPE html>'))throw new Error('Dashboard giải nén không hợp lệ');document.open();document.write(html);document.close();
-}catch(e){console.error(e);document.body.innerHTML='<div class="error">Không thể mở BlueSky Dashboard v6b: '+String(e.message||e)+'</div>'}})();
-</script></body></html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BlueRise Home Code Map</title><style>html,body,iframe{margin:0;width:100%;height:100%;border:0}html,body{overflow:hidden;background:#E4E4DF}iframe{position:fixed;inset:0}</style></head><body><iframe src="https://drive.google.com/file/d/1FrlZQC25OPG7T5oRw4x42OG46LtEjbpY/preview" allow="fullscreen"></iframe></body></html>
