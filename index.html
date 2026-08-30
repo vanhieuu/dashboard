@@ -47,5 +47,17 @@
 <noscript><div style="padding:24px;font-family:sans-serif">Trang checklist cần JavaScript để hoạt động.</div></noscript>
 <script src="assets/catalog-v8.js?v=20260812-8"></script>
 <script src="assets/catalog-patch-v9.js?v=20260813-9"></script>
+<script>
+(function redirectDashboardEntry(){
+  const walk = value => {
+    if (!Array.isArray(value)) return;
+    for (let i = 0; i < value.length; i += 1) {
+      if (value[i] === 'apps/BlueSky-Dashboard.html') value[i] = 'dashboard.html';
+      else walk(value[i]);
+    }
+  };
+  walk(window.BR_CATALOG);
+})();
+</script>
 <script src="assets/app-v8.js?v=20260812-8"></script>
 </body></html>
