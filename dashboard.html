@@ -1,33 +1,17 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BlueSky Dashboard</title>
-<style>html,body{margin:0;min-height:100%;background:#E4E4DF}body{font-family:system-ui,-apple-system,sans-serif}.dashboard-loading{min-height:100vh;display:grid;place-items:center;color:#5D6A72;font-size:14px}.dashboard-error{white-space:pre-wrap;padding:24px;color:#B33A2E}</style>
+<meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate">
+<title>BlueRise Home Code Map</title>
+<style>
+html,body,iframe{margin:0;width:100%;height:100%;border:0}
+html,body{overflow:hidden;background:#E4E4DF}
+iframe{position:fixed;inset:0}
+</style>
 </head>
 <body>
-<div class="dashboard-loading">Đang tải dashboard…</div>
-<script>
-(async()=>{
-  if(!('DecompressionStream' in window)) throw new Error('Trình duyệt chưa hỗ trợ DecompressionStream.');
-  const parts=await Promise.all(
-    Array.from({length:7},(_,i)=>
-      fetch(`assets/dashboard-final/part-${String(i+1).padStart(2,'0')}.b64?v=20260829-final`,{cache:'no-store'})
-        .then(r=>{if(!r.ok)throw new Error(`Không tải được dashboard payload ${i+1}: HTTP ${r.status}`);return r.text();})
-    )
-  );
-  const encoded=parts.join('').replace(/\s/g,'');
-  const bytes=Uint8Array.from(atob(encoded),c=>c.charCodeAt(0));
-  const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
-  const html=await new Response(stream).text();
-  document.open();
-  document.write(html);
-  document.close();
-})().catch(error=>{
-  document.body.innerHTML=`<pre class="dashboard-error">Dashboard load failed: ${String(error)}</pre>`;
-  console.error(error);
-});
-</script>
+<iframe src="https://drive.google.com/file/d/1FrlZQC25OPG7T5oRw4x42OG46LtEjbpY/preview" allow="fullscreen"></iframe>
 </body>
 </html>
