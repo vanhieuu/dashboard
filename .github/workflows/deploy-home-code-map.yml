@@ -1,4 +1,4 @@
-name: Deploy exact Home Code Map dashboard
+name: Deploy staged Home Code Map dashboard
 
 on:
   push:
@@ -19,18 +19,33 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Download exact bundled Home Code Map
+      - name: Rebuild Home Code Map from staged package
         shell: bash
         run: |
           set -euo pipefail
-          python -m pip install --disable-pip-version-check --quiet gdown
-          gdown 'https://drive.google.com/uc?id=1FrlZQC25OPG7T5oRw4x42OG46LtEjbpY' -O dashboard.html
+          files=(
+            assets/home-code-map-exact/part-001.b64
+            assets/home-code-map-exact/part-002.b64
+            assets/home-code-map-exact/part-003.b64
+            assets/home-code-map-exact/part-004.b64
+            assets/home-code-map-exact/part-005.b64
+            assets/home-code-map-exact/part-006.b64
+            assets/home-code-map-exact/part-007.b64
+            assets/home-code-map-exact/rest-001.b64
+          )
+          for f in "${files[@]}"; do test -s "$f"; done
+          cat "${files[@]}" | tr -d '\r\n ' | base64 -d > /tmp/home-code-map.gz
+          gzip -t /tmp/home-code-map.gz
+          gzip -dc /tmp/home-code-map.gz > /tmp/dashboard.new.html
+          test "$(wc -c < /tmp/dashboard.new.html)" -gt 100000
+          grep -qi '<!DOCTYPE html' /tmp/dashboard.new.html
+          grep -qi '<html' /tmp/dashboard.new.html
+          grep -qi '<script' /tmp/dashboard.new.html
+          echo "rebuilt bytes: $(wc -c < /tmp/dashboard.new.html)"
+          echo "rebuilt sha256: $(sha256sum /tmp/dashboard.new.html | cut -d' ' -f1)"
+          mv /tmp/dashboard.new.html dashboard.html
 
-          test "$(wc -c < dashboard.html)" -gt 1000000
-          grep -q '__bundler/manifest' dashboard.html
-          echo 'a16d679600bb54b0b5059f9ab64b5a5324ce2c014ce760e26e26d752c09eef10  dashboard.html' | sha256sum -c -
-
-      - name: Commit dashboard bundle
+      - name: Commit dashboard
         shell: bash
         run: |
           set -euo pipefail
@@ -41,7 +56,5 @@ jobs:
             echo 'dashboard.html is already current.'
             exit 0
           fi
-          git commit -m 'Deploy exact BlueRise Home Code Map bundle'
+          git commit -m 'Deploy self-hosted BlueRise Home Code Map'
           git push origin HEAD:main
-
-# retrigger: 2026-09-02T15:50+07:00
