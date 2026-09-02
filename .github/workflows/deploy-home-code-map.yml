@@ -1,4 +1,4 @@
-name: Deploy staged Home Code Map dashboard
+name: Build single Home Code Map dashboard
 
 on:
   push:
@@ -19,7 +19,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Rebuild Home Code Map from staged package
+      - name: Build one dashboard.html
         shell: bash
         run: |
           set -euo pipefail
@@ -33,19 +33,29 @@ jobs:
             assets/home-code-map-exact/part-007.b64
             assets/home-code-map-exact/rest-001.b64
           )
-          for f in "${files[@]}"; do test -s "$f"; done
-          cat "${files[@]}" | tr -d '\r\n ' | base64 -d > /tmp/home-code-map.gz
-          gzip -t /tmp/home-code-map.gz
-          gzip -dc /tmp/home-code-map.gz > /tmp/dashboard.new.html
-          test "$(wc -c < /tmp/dashboard.new.html)" -gt 100000
-          grep -qi '<!DOCTYPE html' /tmp/dashboard.new.html
-          grep -qi '<html' /tmp/dashboard.new.html
-          grep -qi '<script' /tmp/dashboard.new.html
-          echo "rebuilt bytes: $(wc -c < /tmp/dashboard.new.html)"
-          echo "rebuilt sha256: $(sha256sum /tmp/dashboard.new.html | cut -d' ' -f1)"
-          mv /tmp/dashboard.new.html dashboard.html
 
-      - name: Commit dashboard
+          : > /tmp/home-code-map.gz
+          for f in "${files[@]}"; do
+            test -s "$f"
+            tr -d '\r\n ' < "$f" | base64 -d >> /tmp/home-code-map.gz
+          done
+
+          gzip -t /tmp/home-code-map.gz
+          gzip -dc /tmp/home-code-map.gz > dashboard.html
+
+          test "$(wc -c < dashboard.html)" -gt 100000
+          grep -qi '<!DOCTYPE html' dashboard.html
+          grep -qi '<html' dashboard.html
+          grep -qi '<script' dashboard.html
+          if grep -q 'drive.google.com' dashboard.html; then
+            echo 'Drive dependency is not allowed.' >&2
+            exit 1
+          fi
+
+          echo "dashboard bytes: $(wc -c < dashboard.html)"
+          echo "dashboard sha256: $(sha256sum dashboard.html | cut -d' ' -f1)"
+
+      - name: Commit direct HTML dashboard
         shell: bash
         run: |
           set -euo pipefail
@@ -56,5 +66,5 @@ jobs:
             echo 'dashboard.html is already current.'
             exit 0
           fi
-          git commit -m 'Deploy self-hosted BlueRise Home Code Map'
+          git commit -m 'Deploy Home Code Map as direct HTML'
           git push origin HEAD:main
